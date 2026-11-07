@@ -111,6 +111,19 @@ Write `research/daily-reports/YYYY-MM-DD.md`:
 ## Changes made to the routine itself
 ```
 
+### 9. Commit and push to GitHub
+The project is a git repo pushed to the private repo `TobyYou/charj-kiosk-simulation` (branch `main`).
+
+1. Run `git status`. Check that nothing staged contains secrets (`.env`, `seed.sql`, real API keys or passwords) and that no file is over ~50 MB. `.gitignore` already excludes the usual ones.
+2. Then:
+   ```bash
+   git add -A
+   git commit -m "Daily research YYYY-MM-DD: <one-line summary>" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+   git pull --rebase
+   git push
+   ```
+3. If the push fails, for example because of auth or network, leave the commit local and say so in the report. Never force-push, and never change the repo's visibility.
+
 End the run with a 3–5 line summary of the report.
 
 ## Ground rules
