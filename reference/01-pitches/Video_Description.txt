@@ -1,0 +1,40 @@
+TITLE
+Take Charj ⚡ How 2 Students Turned a $500 Mini-Grant into a Startup | NEN Pitch
+
+DESCRIPTION
+Power up. Take action. Take Charj.
+
+When was the last time you were without your phone? Nine in ten people panic when their battery drops below 20%, and Gen Z starts worrying at about 44%. Charj is our answer: a portable charger rental network. Scan a QR code at a Charj kiosk, grab a power bank, charge on the go, and return it at any Charj location.
+
+In this pitch to NEN and Ronnen Harary, co-founders Toby You and Sophia Peng share how we went from "no idea how to bring it to life" to a working platform, custom hardware, and a community of first users. We incorporated, built the software stack, visited our factory in Shenzhen, and put Charj in people's hands.
+
+How we used the $500 Mini-Grant ($524.74 total):
+🔋 20 power banks + USB-C, Lightning, and Micro cables: $230.50
+🏷️ 20 custom die-cut Charj stickers: $194.24
+🎨 4 artist-edition designs from 3 student artists: $100.00
+(the extra $24.74 came from our own pocket)
+
+What we learned:
+• 30+ students and faculty tried Charj in just 3 days
+• People want a quick top-up, not a full recharge, so we're focusing on fast charging and easy returns
+• Charj traveled with users across New York, Massachusetts, DC, Tennessee, and Arizona: lectures, Halloween parties, a pumpkin patch, the golf course, backstage at a theater show, and more
+• A power bank is something you wear and show off, so we're making it a fashion accessory with artist-edition designs
+
+What's next: 50 kiosks and 400 chargers across the city, building a network dense enough that a charge is always within reach.
+
+No one should lose their momentum to one dead battery.
+
+Follow @charjco · charjco.com
+
+CHAPTERS
+0:00 The problem: low battery anxiety
+0:22 We found Charj: how it works
+0:33 The Charj network
+1:03 Making it real: incorporating & certifications
+1:18 Building the platform
+1:30 Connecting people: our factory visit in China
+1:54 The $500: our first 20 chargers
+2:42 Artist-edition designs
+3:18 What's next: take Charj
+
+#Charj #NEN #StartupPitch #StudentFounders #RonnenHarary #Entrepreneurship #PowerBank

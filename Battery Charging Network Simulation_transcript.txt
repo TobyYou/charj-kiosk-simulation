@@ -1,0 +1,740 @@
+Speaker 1  00:01
+You know different possibilities under different scenarios, like power outage. Guess what? All they're all going to go away, or an event that's nearby, or at the end of an event that's nearby. Right? You're going to have people who are going to want to grab a whole bunch because they've been sitting in there, and and if you have large events where you don't have enough cell coverage, you may notice it drains your battery really, really quickly. So if you have, you know, a a high attendance event anywhere nearby, everyone's phones are going to be draining at the same time, right? And so you'll want to actually be able to anticipate that, or respond at least, or respond to it because they were anticipated beforehand, and say we've put in an extra.
+
+Speaker 2  00:44
+That's really good. Like so, for example, say like the New York Marathon was last. That's right. And then right before, like a week before the marathon starts, we would everybody get two extras. Yeah, that'd be that'd be such a good idea.
+
+Speaker 1  00:57
+Yeah, and and to do that, what you'll want to do is, and you could do this for your your final project if you wanted to develop a a skill or a series of skills to actually instantiate and run simulations under different events to anticipate based on market penetration, usage, and events of how well your your network would stand up, right? If we had one, what happens? How quickly does it go? If we had the ability to put a second one, you know. So you want to get an idea of like what usage patterns might look like, and then what happens to those usage patterns under these different things: the marathon, a concert, you know, those kinds of things.
+
+Speaker 3  01:41
+You use agents for that too. A lot of agents,
+
+Speaker 1  01:45
+and the agent can actually help you. The agent can help you actually write, create the software to run simulation because that's that's kind of like the the pro way to do it is to run a simulation. But then you've got to set the different parameters, like how many people are going to be at the event, how many of those people are actually users and know about that. That there's this location here, or can you have live routing? So if somebody says I needed a new battery, and do you already have it? And so a site sort of comes off if it's full or empty. You can dynamically have it just say, well, nope, that's not going to show up on anybody's app because it's not going to do them any good. Right.
+
+Speaker 3  02:24
+Yeah. Also, like, if you have like, you can show more details in terms of how many chargers are there, and even better, how many like for each how many will be there. It will be there. How and how many like and what charge is like each of them? How many full charge? How many will get you through? Like just because
+
+Speaker 1  02:42
+it's not full doesn't mean. I love that you all picked up on the fact that you need fast charging. People don't want to carry it around for two hours to charge, but they want to they want to get up to a safe level fast. Yeah.
+
+Speaker 4  02:56
+Oh um, I wonder why is it eight slots.
+
+Speaker 2  03:01
+Um, it's actually stackable, so each stack is four, and then we just kind of made it into eight because we thought that was a good size to put into anywhere. Yeah,
+
+Speaker 1  03:12
+but if you could stack it up more, even more, that'd be totally doable. When needed, right? You don't need it everywhere.
+
+Speaker 2  03:17
+Right, that's really a good point. How many?
+
+Speaker 4  03:21
+Yeah, how many can you stock? Like, will not drain out the the outlets.
+
+Speaker 2  03:27
+32. Yeah, but if needed, there's we can also order like the big machines that have like 40 or 50 in them as well. But that'd be another order. Do they do
+
+Speaker 1  03:39
+fast charging, like of the packs themselves.
+
+Speaker 2  03:43
+I actually don't. That'd be interesting.
+
+Speaker 1  03:46
+So the, you know, the packs will have different charging speeds depending on how full the batteries are, and what the temperature is. But they probably all be if they're all they're all inside.
+
+Speaker 2  03:58
+Oh yes.
+
+Speaker 1  03:59
+Great. So that means they're going to be kind of in the optimal range. So it'd be really interesting to run this simulation because you don't need to have 100% pack charge, but you need to have enough to sort of meet the needs. You can do some run simulations and actually figure out how quickly can you turn around the packs. So if they're charging, you know, at full rate, how quickly before they're ready. So you may have ones that are full of empty, but how quickly, and they're going to appear ready at different times. That's a really good simulation problem. But so you, you really need to have that that simulation platform to be able to do that. But you can create that. I mean, you might be able to create it too, but I know Toby. Now you don't have it.
+
+Speaker 3  04:43
+And also, like, because like right now it's sparse. I think it's sparsely populated across New York or Nashville. People also need to like reduce their anxiety to return it. So like, for example, like if if 30 minutes can get me up until up to 50%, up to like 60 or 70 or 80%. Where can I? Where should I be? Like where will I be? Yeah. So maybe started with a
+
+Speaker 4  05:09
+smaller radius. Well, you mean if you if you know where
+
+Speaker 1  05:13
+you're going, you know, because it could it could tell you. So you could have you know if you know where you're going. We're going to be heading. Where are you heading? You know. Then I'll I'll tell you. We can drop this off. Where you will? Where in your journey, you will already be at 60%.
+
+Speaker 2  05:30
+Exactly. So just
+
+Speaker 1  05:31
+stop off here and drop it off here.
+
+Speaker 2  05:32
+Right. Something like city bike.
+
+Speaker 1  05:34
+Like city bike. Yeah. Right. I I love that because then you take all the worry about
+
+Speaker 2  05:39
+it. Exactly. I need to get
+
+Speaker 1  05:40
+up to 80% because I'm getting on a plane. All right, great. Then you'll drop it off here. Yeah,
+
+Speaker 2  05:44
+exactly.
+
+Speaker 4  05:45
+Can they plan like like the trip based on the location that the battery adds?
+
+Speaker 2  05:50
+We should add that. Yeah.
+
+Speaker 3  05:53
+Like, and also like, have you guys considered security yet? Like, what if someone didn't return them on time, and how do you track track that down.
+
+Speaker 2  06:01
+They when they scan it, it would put a $30 hold on their card. So then, if they don't return it within a certain time frame, then we'll just charge that. Okay.
+
+Speaker 3  06:10
+Okay. Yeah.
+
+Speaker 5  06:12
+During during like the whole charging process, do you get like information so the phone's battery percentage and like the GPO cheapest location? No, because
+
+Speaker 3  06:23
+I think it's privacy.
+
+Speaker 1  06:24
+Not not GPS, but it'd be interesting to see if there's
+
+Speaker 6  06:30
+if a yes,
+
+Speaker 1  06:31
+because if you have a bunch of people running, yeah, if you have an older phone, and then it's going to charge much slower. If you have a battery that's not in great shape, it's going to charge slower. If it's cold outside, if it's like below zero out there, it's going to charge slower. So you need a predictive algorithm, which should, because you'll know what kind of you could know what kind of phone they have. Yeah. Before you could know what kind of their phone there is, you might even be able to get some information about their battery. So you can make you can make personalized predictions about when you will be when you will be at 60%,
+
+Speaker 4  07:04
+based on the charging. That would be very. Now, can they learn the battery health? You could. I
+
+Speaker 1  07:10
+don't know if that's in
+
+Speaker 6  07:11
+the. Yes.
+
+Speaker 1  07:12
+There's there's some in the in the Apple API.
+
+Speaker 4  07:15
+Yeah.
+
+Speaker 1  07:16
+But at the very least, you know what phone it is because you could register, and this is my phone.
+
+Speaker 3  07:20
+I mean, iPhone 13 is how many years older now, right?
+
+Speaker 1  07:25
+Yeah, exactly, and it and it charges very slow, and it drains very fast, and it drains very fast,
+
+Speaker 2  07:31
+which is good for us, which is good for you. This is a very good, this is
+
+Speaker 3  07:34
+a good indicator. Yes, I was
+
+Speaker 4  07:36
+thinking this. I just don't know if it's shareable.
+
+Speaker 2  07:39
+Yeah, will we be able to access this data?
+
+Speaker 4  07:41
+Yeah,
+
+Speaker 3  07:42
+and also is it just films or are iPads also okay for
+
+Speaker 2  07:46
+this tablets are enough with 22.5 watts? It will be enough for tablets.
+
+Speaker 7  07:52
+Yeah.
+
+Speaker 2  07:53
+So are you going
+
+Speaker 3  07:55
+like are you going to charge them differently for iPad than iPhone?
+
+Speaker 2  07:58
+No.
+
+Speaker 3  07:59
+No. Okay.
+
+Speaker 4  08:00
+Yeah. And also, I have one like when I using these servers back in Taiwan. If my phone really dead and I can't rent it, so usually sometimes the the the station no they have like also the cables and you can charge it there first and then they can scan and they can rent it. Yeah, because when my phone is really dead. I can't really rent it. So that's they have like a cables attached. Oh, if you're dead when you walk up. Yeah. So that's why like when we do in Taiwan and we have cables here, you can charge it right there first and then you can rent it. Yeah. We did.
+
+Speaker 2  08:36
+Yeah, we did discuss that. Yeah. We didn't end up going with that just for this first production. Oh, okay. And also, the factory told me it was easier to have that with the large machines. Yeah. Oh. So just temporarily, we don't have it. Yeah. And also, we made the decision not to add a POS machine like the card reader. Yeah.
+
+Speaker 4  08:54
+Yeah. No card reader. Do it all through
+
+Speaker 1  08:55
+credit card beforehand. Registration.
+
+Speaker 2  08:57
+Uh, well, just do it through your phone. Yeah. Yeah. Yeah. Or like card info because we thought that if we add a card machine, it would take away from our project of creating a network.
+
+Speaker 7  09:07
+Yeah, yeah, yeah. I love this.
+
+Speaker 3  09:11
+Yeah, very
+
+Speaker 8  09:12
+common question. I I I see a lot of reviews in China when they put this in when people are not really cautious of returning it timely, and for example, if return they they got home and they forgot about it, I I see I heard that you have deposit right of $3. It's good it's good for the business, but for comment wise, for the you know for the people the user experience, they will you know, have we got to deal with the negative feeling people feel about it. Otherwise, people online will be one. So does it mean the reminder, like if if they exceed, for example, three
+
+Speaker 4  09:54
+hours or something? Because like I assume the battery is gonna be drained. Yes. And then like oh, like the battery should be out, then they should return. Like remind put a reminder.
+
+Speaker 2  10:04
+We do have a email reminder set in place.
+
+Speaker 4  10:07
+Can they be on the app?
+
+Speaker 2  10:08
+Like, we don't have an app yet. It's just a web app right now. But we do like. Yeah, exactly. We do have a email one set in place. We also take into account like in the Chinese models. Yeah. Um, if you forget to return it, but it was kind of like you couldn't find the kiosk or you just forgot, you would be able to contact customer service and pause your time or like be given an extra x amount of hours to return without charging your deposit. Nice. Yeah.
+
+Speaker 3  10:37
+Also, like also any like like incent, like incentive, like to the to the customer. I mean, this is later down the road. Like, like after how many charges you can get, like one charge for free. Like those are those are kind of down the road. Like marketing
+
+Speaker 2  10:52
+for
+
+Speaker 3  10:52
+sure. Yeah,
+
+Speaker 4  10:52
+I think one thing like it's a it's an example in Taiwan for the biking city bike that if the slot is all full. They can take a picture to prove that because they don't return. They don't get extra charges because there's not enough slots, like the spots to return. The city
+
+Speaker 2  11:11
+bike in Taiwan is so bad.
+
+Speaker 1  11:13
+Those are
+
+Speaker 2  11:14
+bad. Yeah, you can
+
+Speaker 4  11:15
+return.
+
+Speaker 2  11:16
+It was like the system, the app was like so hard to deal with, especially as a foreigner, because you need like the ID. I see. You can do so much better. I
+
+Speaker 1  11:28
+love this.
+
+Speaker 4  11:29
+I think like if if they can return, they don't get to charge. Yeah,
+
+Speaker 7  11:34
+for sure. So like customer customer service wise, I think if we have some issues, like so far, so feel like we will be dealing with like the customer reach outs. But if there's any way that we can use like an AI agent to automate it to automate it, it will reduce a lot of problem coming from like customer service. And
+
+Speaker 1  11:57
+for that, I think I think that. I do think that you want to to next develop a way to analyze, right? And this is going to be part of this part of the simulation because then you can figure out how to minimize the necessity of those calls,
+
+Speaker 7  12:15
+right? Because you
+
+Speaker 1  12:16
+want to you want to be able to manage, and you also want to be able to to provide you know real time real world guidance as well, but yeah, a way to one of the best ways to handle you know customer issues and customer complaints is to avoid them in the first place. Exactly.
+
+Speaker 3  12:34
+You know, like like I was I mean Dr. Smith and Smith, I was dealing with Calendly issues. So AI chatbot first,
+
+Speaker 6  12:41
+yeah,
+
+Speaker 3  12:42
+and then they will decide whether to send a ticket to the human like operation team, and then they and then they will actually send send something to me. So, not only you you guys have a FAQ section, but like also have a chatbot to see if these these questions really need human attention or not? Yeah,
+
+Speaker 8  13:01
+yeah, yeah. And then they
+
+Speaker 3  13:03
+will send a ticket to you.
+
+Speaker 5  13:05
+I have a question for growth. Like, are you guys thinking about like whenever you're gonna put kiosks into a location? Are you gonna grow it more sporadically or just concentrate in one area at a time?
+
+Speaker 2  13:21
+I think preferably we would want to concentrate it just because it would be easier to return like anywhere you go to build that density.
+
+Speaker 5  13:28
+I see.
+
+Speaker 2  13:29
+But also at the same time, I think it would be hard not to expand it very quickly for a business model. For example, if you're in uptown New York and you want to travel downtown, you don't have a place you're
+
+Speaker 5  13:41
+working.
+
+Speaker 3  13:42
+Right. So you probably want to set things up first before you. Yeah.
+
+Speaker 7  13:47
+So I think to stimulate, if we can actually run stimulation and get our first data, like everything is sure, certain,
+
+Speaker 2  13:58
+and we can target the locations in a lot of
+
+Speaker 6  14:00
+places. Yeah. So, Dr.
+
+Speaker 3  14:02
+Spencer Smith, how would you like? How would you run like a like a population simulation, and then using a probably a probability model to see how many to see how many people may actually need film charting? That's that's the
+
+Speaker 1  14:17
+operation of research part. So, so you actually and and the models know this stuff very well. So you describe exactly what it is about how many you're planning and we have. You ask for for a proper operations research type model. It'll choose the appropriate like Poisson distribution is one that's commonly used. Yeah. So I mean it's you know but it's but it's actually creating the whole statistical model, which would then serve as a simulation for it, and then that way you can do high-speed simulation of actual, you know, travel, return, use, and and essentially what you'd be doing is creating a digital twin of the entire system and of the users of the system as well, and and then then you and that's how you can sort of examine impact of different types of things as well. But you know, because you you need to be able to answer questions: What's the minimum number you need need to be able to put in? What's the density that you need to have? How sensitive do you have to be to travel areas? Like, do you keep it all along subway lines?
+
+Speaker 2  15:20
+We actually have that model,
+
+Speaker 1  15:22
+right? And so, but how dense does it have to be in order to work? How far apart should they be? And can you sort of guess where people are going from a particular location so you can put them where they are most likely to be
+
+Speaker 3  15:35
+and at one time? Yeah, yeah,
+
+Speaker 1  15:38
+yeah. And those are all things that you can think about real hard, but if you want to actually get real data or simulated, that's that's where that comes in handy. Then you can say we shouldn't even try this if we can't get enough density here. We need to collapse down and sort of concentrate on this corridor, for example.
+
+Speaker 3  15:56
+Like, like for example, like if you if you can just do like the the Columbia University Juilliard School of Music, like these kind of area, like that area is pretty popular, right? Awesome, yeah. Times Square,
+
+Speaker 2  16:11
+yeah. Yeah, yeah. And
+
+Speaker 3  16:12
+then and then Toby, you can do Vandy Campus, Belmont Campus, downtown Nashville. Start from start from the most populous area.
+
+Speaker 7  16:19
+Yeah,
+
+Speaker 3  16:20
+that will be. I think that will be that will be cool. And then also like the what Dr. Smithers Smith mentioned, like the Poisson distribution is a classical classical probability to measure like like one of the most interesting math problem I I encountered in my stats class is that like it the the the capacity of a plane is like two 200, and then how many tickets should they oversell in order to like make sure they yeah, and because there are people not going to show up, right? So yeah, those are those are type of the models that can that can be running the simulation.
+
+Speaker 7  16:58
+How how do you, how do we make it like persuasive? Because I I try to I try to like run the little model on campus, but like when people hear about okay, there's a $30 deposit. Oh, it's charging $2 per hour. Then like people won't like necessarily start like using the service. So so like if we can like run like how do we? I don't know. Like it seems like having the first group of data for like the demand and how it will be like how much it's it's needed. It's like a big challenge right now, especially for the pitch, right? Like these like the the the investors they want to know like is the demand actually there and if we are able to like run a simulation and actually provide the number, like will they like believe in our stimulation? Then
+
+Speaker 3  17:55
+you probably like need to do like some of the research on operation like efficiency or operation research to see what how like for example how does Google predict traffic right
+
+Speaker 6  18:10
+yeah
+
+Speaker 3  18:11
+something like that
+
+Speaker 1  18:12
+well you can if you want to collect real data and that that is one thing if if you want to you know you can get I think data is going to be important. So, knowing what people's phone charge is, this may actually require some some groundwork. You can make estimates. So, if you collect just a little bit of data, that you can make strong estimates about, you know, make make general population estimates. But nothing really, real hard data of like going and handing out things. You know, hey, you know, what's your phone charge? Would you would you like to you know would you like to have this piece of candy you know or whatever you know? Tell me your phone charge and I'll give you this. You know, we're trying to figure out phone charge.
+
+Speaker 2  18:57
+For sure,
+
+Speaker 1  18:58
+that's all that you want to have. And and even ideally, what's your phone charge and where you go?
+
+Speaker 2  19:02
+You know, I think that's also one of the big reasons why we want to start production even before we have the sort of pilot command and pilot demand is so that we could have the physical chargers ready and to run that first pilot and to have. So you'll be ready
+
+Speaker 1  19:20
+to pivot to it, absolutely. But even before then, you can begin to collect some information just about what, where they are. Because then, like you want to put it in places where the people that you ask and when you ask are low on charge. So you can you can just do you know a quick estimate of the different places. These are the places we think it's it's going to be useful. Great, go there and ask people what their phone charge is. If you find that everybody is like, oh, I'm 80%, I'm 80%, I'm 60%, that's like, no one's going to use it here.
+
+Speaker 2  19:54
+Yeah.
+
+Speaker 1  19:56
+So, but and and then if you if you that requires some investment, so you can run simulations and say when you're walking out of the subway. Like, did they ever put? Did they ever put repeaters in subways? Have they done that yet?
+
+Speaker 2  20:14
+Sorry. Can you
+
+Speaker 1  20:15
+get cell coverage in in subway in New York right now?
+
+Speaker 2  20:19
+Not in the subway. Yeah,
+
+Speaker 1  20:20
+they they were gonna do it, but I don't think they ever did. Which means when you come out, your phone's gonna be much lower. How much lower? So you can figure out where people are coming out, you know, and then just getting some data, then you can make pretty good estimates about what it would look like elsewhere. Everyone's coming pretty much with the same kind of variation in phone charge when they're coming in, so you get an estimate of some going in and some coming out, and you can get an idea of how much of a drop there's going to be, and then you can make good intelligent choices about where it's going to be, good place where people are going to be low.
+
+Speaker 2  20:56
+That's really good. So, like for example, if you were to track like the most popular start and stop subway trip in New York, the longest, and the most popular,
+
+Speaker 1  21:06
+and you say they're going to take the biggest hit here. So you're not going to get everybody, but somebody who walks in with 20%, this trip is going to cost them 10%, and they're going to be panicking.
+
+Speaker 2  21:15
+That's really good.
+
+Speaker 1  21:17
+Yeah.
+
+Speaker 3  21:19
+Also think about people going out at night.
+
+Speaker 2  21:23
+That's a big one, yeah.
+
+Speaker 3  21:25
+So, so is your your? I think I assume your business is gonna run 24/7.
+
+Speaker 8  21:30
+Yeah.
+
+Speaker 7  21:30
+Yeah.
+
+Speaker 2  21:30
+But one of the challenges, I guess, is finding those venues that are 24/7 open where people can walk in and scan one.
+
+Speaker 4  21:38
+Right. Gas station.
+
+Speaker 2  21:40
+Gas station like
+
+Speaker 7  21:42
+bars. Bars.
+
+Speaker 2  21:45
+I guess in New York would be a better option.
+
+Speaker 1  21:52
+Cool. Yeah. I. What other What other questions or feedback for you having to get. Love the the repo, of course.
+
+Speaker 7  22:08
+Yeah. Are we are we having are we still like testing software or everything? Just because because like we just learn like we we learn about issues like use a lot of issues
+
+Speaker 1  22:27
+yeah
+
+Speaker 7  22:27
+Claude comes really good at issues yep and how do we like change
+
+Speaker 1  22:31
+all these conversations and issues and I should have mentioned beforehand any conversations that you have like this you should be recording and getting transcript oh you were you're getting transcript yes yeah yeah you already have to transfer. Good. Yeah, and then that's going to be you can turn those into multiple issues. You can say identify the issues, ask me questions, develop these in full issues for for future development. Yeah. Okay. User modeling. So, think about the different types of users that you might want to get, and you can generate a whole bunch of these. So, this is modeling at the at the individual level. So, and you can test out how your offering may work with them. So we talked about this in class, right? So you can actually through, you can create a persona, and then actually have it run through interactions to see what it's like. Yeah. So I would I would strongly suggest doing that because then that is you used to do when you're doing pitches, especially when you're doing pitchers for larger amounts of money, you tell the user story. Here's the user story, right? Well, you can have like, well, we've simulated 100 users of real world, you know, based on real world people, and this is what they look like, and here's what we found.
+
+Speaker 2  23:52
+Yeah,
+
+Speaker 1  23:53
+there's absolutely you can do that now, and you can actually have an agent take on the persona, try using this, talk about that, and what what happened was they went here, but they actually work here, and so when they when they went to go drop it off, when their phone was ready because they have an old phone, it wasn't ready until later. There was no place for them to drop it off, so they had to call customer service because they weren't going to be able to return it until they're returned from work. You know, yeah, and and those and those are pretty straightforward
+
+Speaker 2  24:24
+to do. Yeah. So
+
+Speaker 1  24:25
+you can have a lot of learnings, but you just have to make sure that the personas that you have are representative of the people that you are targeting for to be customers. And you may you may change who your customers are based on that. Like
+
+Speaker 3  24:37
+you can simulate like their working schedule, day to day schedule, and you can you can simulate their personality as well.
+
+Speaker 1  24:43
+Yeah, risk averse, you know, penny pinching.
+
+Speaker 3  24:47
+And like even before generative AI, I think there's already ways that that that like it's indicative, but like generative AI makes can make sure that it can be simulated.
+
+Speaker 1  24:57
+Yeah,
+
+Speaker 7  24:57
+yeah. So do we just come up with those
+
+Speaker 1  25:02
+criteria. What you do is you talk about the the groups that you're interested in, and then you ask for the agent to actually come up with realistic. Given, so if you say we're interested in people in this area, then what the agent can do is do an investigation of like employment patterns where people tend to work there. You know where where they live versus where they work. There are portraits of all different areas, and so you use that to come up with real world representative types of personas that would represent the people living there, in all the varieties. You don't have to you don't have to write it yourself. You say we're targeting we're thinking of targeting this. They would be traveling through here, so you could say they either live here or they traveling through here. Well, then the agent can work backwards and say, "Well, you'd be traveling through here because you're on the red line, you know, and you know because you know. So here's where you are, and here's the different occupations. So let's create 100. This person works in finance downtown. This, you know.
+
+Speaker 2  25:59
+Yeah, that makes sense. Something I'm thinking of is like we could simulate a student at Columbia who per se lives in Midtown. Sure. Take the one from 42 to 116.
+
+Speaker 1  26:09
+Absolutely. And
+
+Speaker 2  26:09
+then throughout the day, they leave their house with like 80%. And then after their school day is over, they come back. Now they're at 20. And so where do they return?
+
+Speaker 1  26:18
+Yeah.
+
+Speaker 2  26:18
+Yeah.
+
+Speaker 1  26:19
+Exactly. And and and some of those you can design. You can say because that's who we're going after, or you can say I don't know who we're going after. Just capture everybody in the air. Both are possible, and and you can generate lots of different kinds, right? Yeah.
+
+Speaker 7  26:35
+So the agent would just go do its research and do
+
+Speaker 1  26:38
+the research, and then create the multiple personas.
+
+Speaker 6  26:41
+A
+
+Speaker 1  26:41
+different agent would actually then take the personas and run them through the simulation, or or through the network to sort of see what is likely to happen. You can say, in in the current network, the where you have it set up and the number of ones that you have set up, you know, these 20% of people never were able to return. So you can run it and say, what happens?
+
+Speaker 2  27:03
+But before that simulation, do we have to know where our kiosks will be? All of our kiosks.
+
+Speaker 1  27:08
+Well, if you want to run the full, yeah. But then, but I mean, but you're not married to that, right? You can say, I'm going to boom here, here, and here. Run. Ooh, that didn't work. Okay, what if we put it here? We take away this one here. What if we put it here? Oh, that works much better if our true audience is going to be, you know, Columbia students of this particular type. It works better if we put it here than here. And those are decisions that are really tough to make unless you actually have you can run this, yeah. The persona plus the simulation plus your guesses about where things go. You can you can do all this experiment to you know all these experiments in silica, and and have some confidence about the risk, and you know before you actually. It's a really powerful statement to make to people when you're trying to get money, you can say we've run it. We know, we've run it. We we know where not to put it. We have some good ideas where to put it. The next thing we need is some investment so we can try it and get more data and make an even better job.
+
+Speaker 2  28:14
+That's super convincing. Yeah.
+
+Speaker 7  28:17
+Oh, because at at the beginning I was a little worried about like how do how are we sure that the data or the input the stimulation we're running like truly like act like accurately represent the real situation like is there is a way for us to test that like without without actually put putting them in work so then like as as an investor perspective, like, oh, you say you run and simulation on AI, like, but how do I like?
+
+Speaker 1  28:48
+And that's why.
+
+Speaker 3  28:49
+So this is
+
+Speaker 1  28:50
+where statistics come in.
+
+Speaker 8  28:53
+Right.
+
+Speaker 1  28:53
+So with simulation, first of all, you don't try to create all of the personas. For example, you don't set all the parameters. You don't hand code that simulation because then you, you know, it's what you thought of, right? So instead, as much as possible, you get driven by, you know, this is what we believe our population will be. Now let's base it on that. But that's why you allow the agent to go and investigate, and you try to get you try to get that population about right. So, do you think you're going to have like adoption by a particular kind? It's probably going to be people adopting who are going to be using earlier generation phones. If you have a brand new iPhone, you know, 18, your battery's great, and it's great all day long. So, all right, then let's make assumptions. Here are the assumptions that's very clear to everyone. That's why you do a number of those, because when you broadly sample and your sample is approximately right, and then you run multiple simulations, what you're getting is the average, right? And it tends to actually be highly accurate in terms of what the real world situation tends to tends to be and what that variance is around it. So you just need to to be in the ballpark with the personas. That's when you run the simulations, and that's when you start getting very useful data. Give you an example. If I have a big jar of gumballs, right? You may have heard this example before, and it's just like you know, there are like over 100 of these things. One person making an estimate using whatever method they want is going to make an estimate. It's not going to be very good. A weird thing happens though when you have many different people with many different types of approaches try to make an estimate of it. It turns out that the average estimate across all those people is extremely close to the reality, same thing with simulations. What you need is to have the proper variety, the proper sort of breadth of of those that are going to be part of it. Then you run the simulations, and you actually get something which is highly informative.
+
+Speaker 7  31:14
+Wow.
+
+Speaker 1  31:14
+Yeah. And if it's not going to be very good, you know it's not going to be very good because the variance is going to be high. It doesn't converge. It's like we need more, and then it's not that it failed. That means you don't have enough data yet. And you have this, and this is called the digital twin approach. When you have the digital twin, it tells you where you need that information. It's not that you need more information. It's like we need to put more kiosks in this area, not because we think we belong there, but because we don't know enough. So we're going to make a commitment to make a kiosk there, or to gather data there, because it's too much variation. We can't do. The final thing that I'll say, because I realize I'm sort of overloading you, is tie this to financial outcomes, meaning you don't just simulate the number of you don't just simulate the use and everything like that, because the financially most rewarding combination of where these go is probably not going to be the same place where you put them to maximize use because that's not what you're trying to to maximize. You're trying to minimize lack of returns, maximize hours of use. You want people to be rented. You want these to be in use. That's a different thing than just raw utilization. So when you run these simulations, the outcome is money. The outcome is profit. And then when you talk to your investors, you can say the difference between putting it here and here is $400 a week. So almost the same, but it's a little bit better here than there. Then you're talking the language that they understand. You don't want to invest. If you, you know, if you invest, and so we can double the number, you want to know. I can tell you right now where I put them, and I can tell you exactly. I can tell you a very good estimate of how much we would make based on where we would
+
+Speaker 9  33:20
+put them. On every
+
+Speaker 7  33:21
+additional kiosk we place into it, it's like compounding too.
+
+Speaker 3  33:27
+Where that is
+
+Speaker 1  33:32
+too. Hey, you got to get it over the hump because then once we in our simulations, once we get over the hump and then we filter the network, then you get overall greater utilization, and so we get the additive bump. You have to get as fast as point first, because then you're not just saying we have a good idea. It's like we run the numbers.
+
+Speaker 3  33:50
+And then like when when you reach an optimal number, like think like probably also think about like where do you want to be next, maybe Chicago, and how are you going to make that next step happen? Use the same data. I use the same sort of an
+
+Speaker 1  34:07
+approach. The digital twin will tell you what information you must collect. The digital twin, you can make an assessment on how valuable the information was you collected, and so you can say, "Hey, to get into this new market, here's the information that we must collect, and then you can start making estimates right away. The digital twin helps you because of the high variance. Whether it's a great estimate or not, at least you know you're in the ballpark. If there's no run of the simulation where you make money in Chicago, there, you know, even with just a little bit of information, even with more information, you're probably not going to make money. So don't go there. Chicago would probably work. Like Miami,
+
+Speaker 4  34:49
+I'm
+
+Speaker 1  34:50
+bad enough. People are in cars. They're not in subways. They're, you know what I mean? Yeah. But people are out late. But they're out late, and so so it could be,
+
+Speaker 2  35:00
+yeah,
+
+Speaker 1  35:01
+yeah. I mean, but but you want to have something that you can actually try and point to, and and in a way, that's going to be that could be one of your more powerful tools. Is you can simulate the business before you run it.
+
+Speaker 2  35:17
+That's
+
+Speaker 6  35:19
+really good. Cool.
+
+Speaker 7  35:20
+That's our next action plan. Yes, love it. And could
+
+Speaker 1  35:24
+absolutely be your final project.
+
+Speaker 7  35:26
+Final project. Assimilation of a real business.
+
+Speaker 1  35:30
+Yep. Yeah.
+
+Speaker 6  35:32
+Wow.
+
+Speaker 1  35:32
+Excellent.
+
+Speaker 2  35:34
+Yeah. Thank you, Professor.
+
+Speaker 1  35:35
+You're very welcome. Thank you so much. This is exciting.
+
+Speaker 4  35:38
+Wow.
+
+Speaker 1  35:39
+Good work.
+
+Speaker 7  35:42
+Yeah, it's I. I was personally inspired by Sophia because she was the one that learned Cursor, taught me how to use GitHub and
+
+Speaker 1  35:52
+I love it and
+
+Speaker 7  35:53
+Claude code and everything. Yeah, like when I see how she like put all this into reality, like like motivates me. Like, okay, that's actually like part of the reason why I take AI 1010.
+
+Speaker 1  36:05
+Thank you, Sophia. Thank you.
+
+Speaker 2  36:07
+Of course, I'm on. Zero. I'm a humanities major.
+
+Speaker 7  36:14
+Yeah. Yeah. So it's it's incredible to see how like our generation's life and our future and our ability to produce and create
+
+Speaker 1  36:26
+brand new things. That's that's really want. That's what I want the the message for. I I so I met with students in Miami at the school. They're called Palmer Trinity. Bunch of parents, very concerned about what what are our kids going to do? You know, AI is there and it's going to take all the jobs. What are our kids going to do? It's like, oh no no. Completely reverse this.
+
+Speaker 2  36:51
+Yeah.
+
+Speaker 1  36:52
+Completely reverse it. What do they? What can they not do? And now now that the the now the challenge is to figure out what you want to do, because you, I mean, you could do anything. So, but yeah, that was. That's why I love that.
+
+Speaker 3  37:10
+This project, like, used to take a full software development team.
+
+Speaker 1  37:14
+Oh, this would be, yeah, yes. Companies wouldn't be able to do this. Companies wouldn't be able to do this until they had enough money, 50k at least, to hire the software engineers to build out the first part of this, and then you'd be desperate for the next round of funding so you could keep on paying the people, and even then you'd be you'd be faking part of it. You'd have people behind you. You'd be like, hey, we're going to buy a whole bunch. We're going to put it here. That's what happened with all the like the scooter rentals and stuff. They didn't do analysis of where that was. They spent a whole bunch of money, put scooters everywhere, tracked to see where they went. The best ones tracked to see where they went. The other ones didn't. They just kept on driving people around in trucks to collect them into, you know, this. You've built something real, and you can build something even better than real, which is the synthesis. I write this to the synthetic. Wow! And for not having to hire people to begin
+
+Speaker 5  38:13
+with, maybe maybe this could be structured in a way that you could collect data if you can have a GPS system on there, even though even though GPS system could be a stretch, but if you have a GPS system, you guys will be the one who is providing data. If you guys have the system and structure for that, and the the scooter instance consists that because when they start going to a market, they don't have enough data, and even though it's really hard to get third-party data from different companies, you guys could be one who's like providing those kind of data by by
+
+Speaker 7  38:56
+collecting. That that would be some like security, but also like.
+
+Speaker 2  39:00
+But we will get to see like where they rented from and when they return, so you can draw that line.
+
+Speaker 5  39:06
+Yeah, it's like a possibility to like. Wow,
+
+Speaker 7  39:14
+statistics. Super cool! Wow, thank you so much for all the information.
+
+Speaker 1  39:20
+Absolutely, Absolutely!
+
+Speaker 7  39:23
+Wow.
+
+Speaker 1  39:25
+All right. Well, I can't wait to can't wait to see what happens with this. This is so exciting. When do you hear back? In a month. In a month. Yeah. Okay. Yeah.
+
+Speaker 7  39:36
+Exactly. In a month. December 5, fourth. Okay. Yeah. Yeah. I heard. I saw an email from the connected computing saying that there is also founding opportunities for projects like this. So,
+
+Speaker 1  39:53
+yep, absolutely. No, we're gonna have lots of different opportunities for that. I love that.
+
+Speaker 7  39:57
+Awesome. Maybe I should like apply. Enter
+
+Speaker 4  40:00
+all of them.
+
+Speaker 7  40:00
+Just enter all of them.
+
+Speaker 1  40:01
+Oh no, enter all of them, especially. Yeah, and I think, and I would love to, especially if you, this digital twin, would love to have you be part of AI Showcase if you're still in town. That's going to be December
+
+Speaker 7  40:17
+11th. Yeah,
+
+Speaker 1  40:17
+December AI Showcase. Yeah. Well, first, it's the day after classes end, so yeah, that's always fun. Yep. So Friday, december 11, like two to four. Final project due. AI 1010. There you go. Oh, I
+
+Speaker 7  40:37
+asked I asked Claude to like control my Apple Calendar and everything. Log into my Brightspace, scan all the syllabus, add
+
+Speaker 1  40:45
+it. Absolutely. Midnight. So much easier.
+
+Speaker 3  40:50
+So much easier.
+
+Speaker 4  40:51
+Fantastic. Wow.
+
+Speaker 7  40:53
+Crazy. Awesome.
+
+Speaker 1  40:54
+How long are you down for, Sophie? Just for the weekend. Just for the weekend. I'm so glad you're here. Yeah. Are you going to be doing some stuff while you're here.
+
+Speaker 2  41:01
+Oh, um, I don't know. I think
+
+Speaker 1  41:05
+Nashville hot chicken.
+
+Speaker 7  41:07
+Oh, the hottie bees, and then we're the hottie
+
+Speaker 1  41:10
+bees, Princes or Boltons. Hmm. Princes or Boltons. I I like Bolton's because I'm pescatarian, but they Boltons does a hot fish, so it's catfish based.
+
+Speaker 2  41:22
+It is fried.
+
+Speaker 2  41:24
+Okay. I like that. Hot oil.
+
+Speaker 7  41:30
+Oh, okay.
+
+Speaker 1  41:30
+Yeah, in by spicy hot oil. Like a
+
+Speaker 2  41:34
+better fish and chips. It is.
+
+Speaker 1  41:36
+Do you eat spicy?
+
+Speaker 2  41:40
+Yes, of course.
+
+Speaker 1  41:42
+So I would I would try. Don't go to the spiciest. You'll be surprised. There's a general belief, you know, that you know that we you know that that that many the funniest is so so I have friends who from India and from regions that have extremely spicy, right? And they're just like this food here is not going to be spicy, and so they get the spiciest, and it is a disaster. They're crying, they're like sweating, so really go go a little bit lower. It depends. It depends on some like my favorite place, which burned down, so there anymore. It's very sad, but yeah, hopefully they'll rebuild Helen's. The hottest was like great for me, a little bit too hot for others. But the hottest for some of the other ones, like Princes, I can't eat, and I I eat very spicy. Like I like Thai hot. I like you know I like the you know I like it. But their spicy was just like that's crazy. Notice.
+
+Speaker 3  43:00
+about this. Like, if the hottest level, the like the heavy bees made you sign a waiver.
+
+Speaker 1  43:07
+Yes. And place another place that closed, they would give you gloves to wear.
+
+Speaker 8  43:14
+Oh. To eat it. It's
+
+Speaker 1  43:15
+like, well, if you don't want your hands on, because you know they're concerned about you know, but like.
+
+
+Transcribed by https://otter.ai

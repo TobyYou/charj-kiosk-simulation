@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+
+# Secrets — never commit
+.env
+.env.*
+*.pem
+*.key
+seed.sql
+setup-local-dev.sql
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Large raw downloads (keep aggregates + .meta.md instead)
+research/data/raw/
+*.zip
+*.parquet
+
+# Local Claude settings
+.claude/settings.local.json

@@ -1,0 +1,52 @@
+CharjCo’s Business Pitch to NEN & Ronnen Harary
+Power Up. Take Action. Take Charj.
+By Toby You and Sophia Peng, Co-founders of CharjCo LLC
+
+Our Problem
+As college students and members of Gen Z, we noticed the growing necessity of being powered up. Our livelihoods are becoming accessed on our phones: our university course work, dearest AI assistants, communication with our families oceans away, payment for the subway and dinner–even our car keys. Within the fast pace of our lives, our worst nightmare becomes a dead phone when we’re out. This anxiety is not unique to us: nine in ten people report panicking when their battery drops below 20%, a feeling now called “low battery anxiety” (LG, 2016). According to a 2025 Talker Research survey of 2,000 Americans, the average person starts to worry once their phone hits 38%, and Gen Z gets anxious even sooner, at about 44%. And what needs to be charged is not only our phones: our smartwatches, glasses, headphones–all of these devices we carry mobile throughout our day need to stay powered up. Keeping a charged portable on us at all times is heavy, tedious, and unaesthetic. Charj is our solution: scan to rent a power bank at a Charj kiosk–take it with you to keep your devices powered up wherever you are to capture memories, an important interview, your late-night-Uber back home, at the moments where you need it most. Return anywhere, so you can charge stress-free as you travel and take the day.
+
+Business Model
+Charj is set to build a portable charger rental network: encounter a station, scan a QR code, take a portable power bank, and return it at any convenient Charj location. Our kiosks will be placed in primarily private establishments where people come-and-go: cafes, restaurants, bookstores, etc. These will be done through partnerships with local businesses that will receive a percentage commission per rental from their kiosk location. Not only will partnered establishments receive free installation and monetary commission, they will also gain foot traffic from Charj users who walk in looking to scan for a power bank. Our revenue will primarily come from a per hour rental fee. A temporary hold will be put on a customer’s card after successful rental to promote timely returning on power banks; if a customer does not return within a certain timeframe–likely 24 or 48 hours–the deposit will be charged. This rental based power bank business model is tried and true in other parts of the world such as East and Southeast Asia, but is under-developed in North America. Charj hopes to adopt and deliver this model along with our own creative innovations, which we will detail below.
+
+Why do we care?
+“One of the most important elements of running a successful business is momentum… The key is to keep moving, keep products flowing, and not stagnate”
+–Ronnen Harary, No Experience Necessary
+
+We care about taking action. Momentum is essential to our daily lives. For us, it’s always about catching the next opportunity, documenting our present successes, and sharing it to our families oceans away. And, what kills our momentum oftentimes is something so minute: a dead phone. With Charj, we are not simply charging people’s devices; we are enabling them to work their flow uninterrupted–to keep going.
+
+What have we done?
+“There is an incredible amount of power in not knowing what you're doing, simply because you can't see the roadblocks ahead and so you don't know what's Impossible. When you have no self-imposed limits, you'll go further than you ever imagined.”
+–Ronnen Harary, No Experience Necessary
+We started CharjCo with no coding experience, no hardware background, nothing about the mechanics of a power bank, and no idea how to talk to a factory. But one phrase kept coming back up: “how hard can it be?” 
+
+Here’s where that question has taken us:
+- Incorporated CharjCo LLC, with banking and an EIN in place
+- Built the full stack software (app, payments, database, and IoT connection to the kiosks)
+- Proved it works end to end: a user pays on their phone, and a charger physically ejects from the cabinet
+- Visited two factories in Shenzhen and am preparing a first production order of 50 kiosks and 400 chargers
+The factory visits taught me the most. I walked in not knowing what plastics to ask about or which certifications mattered. I expected to be dismissed as a student with an idea. Instead, they congratulated me for building this from a campus on the other side of the world. Their engineers walked me through technical problems, and before any contract was signed, they took me to dinner. The people I thought would judge me became my teachers.
+Not knowing what was “impossible” is exactly why we got this far, this fast.
+
+
+
+“How hard can it be” took us through the initial learning curves not only of the technical requirements (coding, getting incorporated, etc) of our idea but also the relationships we sought as we navigated the business component.
+- With no coding experience and even more ignorant about backend construction, data storage, IoT integration, nor how to talk to factory owners (what questions should I ask? What plastics are good? What certifications should I look for?), I communicated with factories with the mindset of positive ignorance (“how hard can it be? How much more can I learn?). This mindset allowed me to be more confident, less fearful, and more receptive to what my potential business partners could teach me. Instead of being judged for my juvenile ignorance, I was, in both factory visits, congratulated for my courage in executing an idea like this from a college campus abroad, guided through technical tasks by members of their IT team, and treated to meals where even before contracts were signed, potential partners quickly became friends and teachers. This is the reward of my ignorance and its propelled action. 
+
+
+Our Next Steps and Innovations [GAME PLAN WITH $500? WITH $25,000? + WHY NOW?]
+“Surfing the zeitgeist doesn't always mean chasing the obviously trendy thing, like the internet in the late nineties or AI today. You can use technological and cultural shifts to re-invent and redefine any established industry.”
+- Verbalized our idea among our friends and on campus
+- Tangible prototype + visualization of the geographical expansion of where “our little extra power” could be taken
+- The $500 NEN mini-grant helped us to put the prototype chargers into people’s hands while our custom hardware awaited shipment, and learn what would make the service useful in their actual lives. Creating a tight community. 
+- Only when we have enough installations can the business model work. Our primary goal with $25,000 would be the expansion of installations. We seek to incentivize partnerships with local businesses and public spaces with free installation, monetary compensation, and our personal connections/help from friends and family who can place us in establishments
+  - Demands: our door-to-door strategy asking 52 establishments around Morningside Heights, NYC landed us with 5 tentative yes’. In Boston, friends and family in the restaurant and cafe businesses have gotten us around 10 more tentative locations
+  - Our first production order is really small: only 50 kiosks. This allows us to put our ideas into a tangible and workable product while controlling our input investment and under-surveyed demand. Going into production is also important to get our first partnerships too–without a tangible product, it’s a lot harder to get a solid handshake.
+- Another principle goal with our expanded funding would be to invent our powerbanks into fashion and culture. We want to collaborate with and commission local art students in displaying their art to be printed on our chargers to be brought all around the world. Charj is innovative in that it seeks to expand the culture of accessorizing our most important and mobile objects. Like our phone cases, our power banks can become trendy fashion accessories–something with personality, creativity, and aesthetic–accompanying you to your favorite parties and concerts out.
+- As we depend more and more on our mobile devices in our day-to-day life, we also need a mobile way to keep you charged up. The “obviously trendy thing” today is AI: and surfing this zeitgeist to us means supporting the power that mobile AI usage will run on.
+
+
+[OUR PASSION & CONVICTION + ABILITY TO EXECUTE]
+“There is an incredible amount of power in not knowing what you're doing, simply because you can't see the roadblocks ahead and so you don't know what's Impossible. When you have no self-imposed limits, you'll go further than you ever imagined.”
+- “How hard can it be” took us through the initial learning curves not only of the technical requirements (coding, getting incorporated, etc) of our idea but also the relationships we sought as we navigated the business component.
+- With no coding experience and even more ignorant about backend construction, data storage, IoT integration, nor how to talk to factory owners (what questions should I ask? What plastics are good? What certifications should I look for?), I communicated with factories with the mindset of positive ignorance (“how hard can it be? How much more can I learn?). This mindset allowed me to be more confident, less fearful, and more receptive to what my potential business partners could teach me. Instead of being judged for my juvenile ignorance, I was, in both factory visits, congratulated for my courage in executing an idea like this from a college campus abroad, guided through technical tasks by members of their IT team, and treated to meals where even before contracts were signed, potential partners quickly became friends and teachers. This is the reward of my ignorance and its propelled action. 
+
