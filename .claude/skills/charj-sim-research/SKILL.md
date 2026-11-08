@@ -14,6 +14,7 @@ Project root: the folder that contains `GAME_PLAN.md`. All paths below are relat
 | Path | Role |
 |---|---|
 | `GAME_PLAN.md` | The plan from the Nov 6 2026 meeting with Dr. Smith. It is the source of truth for *what* the simulation must answer. Read §1–§7 at the start of each run. |
+| `simulator/` | The digital twin (map dashboard + Monte Carlo). `js/params.js` holds every model input with provenance; `cli.mjs` runs it headless. |
 | `reference/` | Copies of Charj's own documents: pitches, PO costs, kiosk locations, app schema. `reference/README.md` indexes it. |
 | `research/PARAMETERS.md` | **The assumptions register.** Each model parameter has a value or distribution, its source, its confidence, and the date it was last checked. This is the main output. |
 | `research/TOPICS_QUEUE.md` | Prioritised backlog of open research questions. |
@@ -80,6 +81,7 @@ Numbers that sound right but can't be traced are the main way a simulation loses
 - **`research/PARAMETERS.md`:** update or add rows. Use a distribution when the data supports one (e.g. `Lognormal(μ=…, σ=…)` or `NHPP λ(t) table → data/xyz.csv`).
   - Set confidence: `HIGH` = primary data, directly applicable. `MED` = good data, needs transfer (e.g. other city or older year). `LOW` = weak or indirect. `ASSUMPTION` = no data, range chosen.
   - Never delete history. If a value changes, put the old value and the reason in the row's notes.
+- **`simulator/js/params.js`:** the simulator reads its inputs from here. Mirror every PARAMETERS.md change into it (value, low/high range, conf, source, url). Then run `node simulator/cli.mjs 50 normal all`, and note in the daily report whether rentals/station/day still falls in the benchmark band (`BENCHMARKS` in params.js). If a change moves it outside the band, say so; don't silently re-tune.
 - **`research/data/`:** save small tables or extracts with a `.meta.md`. Keep files under ~5 MB; for big datasets, save an aggregate plus the script or query that produced it.
 - **`research/SOURCES.md`:** add every source used.
 - **`research/STATS_TOOLKIT.md`:** when you learn a better method (e.g. a non-homogeneous Poisson process fitted to hourly ridership, or an Erlang-loss approximation for slot blocking), record:

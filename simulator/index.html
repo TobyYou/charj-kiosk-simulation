@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charj Digital Twin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">⚡</div>
+    <div>
+      <h1>Charj Digital Twin</h1>
+      <p>Network simulation · Morningside Heights pilot, New York (ET)</p>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-view="live">Live network</button>
+    <button class="tab" data-view="mc">Monte Carlo</button>
+    <button class="tab" data-view="ab">Layout A/B</button>
+    <button class="tab" data-view="sens">Sensitivity</button>
+    <button class="tab" data-view="data">Data &amp; sources</button>
+    <button class="tab" data-view="model">Model</button>
+  </nav>
+</header>
+
+<!-- ───────────── LIVE ───────────── -->
+<section class="view active" id="view-live">
+  <div class="live-layout">
+    <aside class="panel left">
+      <div class="section">
+        <h3>Scenario</h3>
+        <select id="scenario"></select>
+        <div class="hint" id="scenarioDesc"></div>
+      </div>
+      <div class="section">
+        <h3>Network <span id="netCount" style="color:var(--text-secondary)"></span></h3>
+        <div class="btnrow" style="margin-bottom:8px">
+          <button class="btn" id="selLive">Live only</button>
+          <button class="btn" id="selCore">Core 6</button>
+          <button class="btn" id="selAll">All 13</button>
+        </div>
+        <div class="sitelist" id="sitelist"></div>
+        <div class="hint">Yellow = in Charj's database today. Others are candidate host types from the pitch, not signed hosts.</div>
+      </div>
+      <div class="section">
+        <h3>Levers</h3>
+        <div class="field"><label>Price per hour <b id="v_price"></b></label><input type="range" id="price" min="0.5" max="4" step="0.25"></div>
+        <div class="field"><label>Market awareness <b id="v_aware"></b></label><input type="range" id="aware" min="0.002" max="0.05" step="0.001"></div>
+        <div class="field"><label>Slots per station <b id="v_slots"></b></label><input type="range" id="slots" min="8" max="32" step="4"></div>
+        <div class="field"><label>Packs loaded per station <b id="v_packs"></b></label><input type="range" id="packs" min="2" max="32" step="1"></div>
+        <div class="field"><label>Venue revenue share <b id="v_host"></b></label><input type="range" id="host" min="0" max="0.5" step="0.05"></div>
+        <label class="toggle"><input type="checkbox" id="routeAware"> Route-aware return suggestions</label>
+        <label class="toggle"><input type="checkbox" id="rebalance" checked> Nightly rebalancing (04:00)</label>
+        <div class="hint">Changing a lever restarts the week. The same settings feed the Monte Carlo, A/B and Sensitivity tabs.</div>
+      </div>
+    </aside>
+
+    <div class="mapwrap">
+      <div id="map"></div>
+      <div class="nightshade" id="nightshade"></div>
+      <div class="clock">
+        <div class="time" id="clockTime">00:00</div>
+        <div class="day" id="clockDay">Monday · week 1</div>
+        <div class="scen" id="clockScen"></div>
+      </div>
+      <div class="playbar">
+        <button class="btn primary" id="play">▶ Play</button>
+        <button class="btn spd" data-speed="10">10×</button>
+        <button class="btn spd on" data-speed="60">60×</button>
+        <button class="btn spd" data-speed="300">300×</button>
+        <button class="btn spd" data-speed="1200">1200×</button>
+        <button class="btn" id="reset">↺ Reset</button>
+      </div>
+      <div class="legend">
+        <div class="row"><b style="color:var(--text-primary)">Station slots</b></div>
+        <div class="row"><span class="sw sq" style="background:var(--good)"></span>Pack ready (≥ release level)</div>
+        <div class="row"><span class="sw sq" style="background:var(--warning)"></span>Pack charging</div>
+        <div class="row"><span class="sw sq" style="background:#2a2d33;border:1px solid #444"></span>Empty slot (room for a return)</div>
+        <div class="row" style="margin-top:6px"><b style="color:var(--text-primary)">People</b></div>
+        <div class="row"><span class="sw" style="background:var(--critical)"></span><span class="sw" style="background:var(--warning)"></span><span class="sw" style="background:var(--good)"></span>Renter: phone battery low → charged</div>
+        <div class="row"><span class="sw" style="background:transparent;border:2px solid var(--critical)"></span>Missed demand (no station / empty)</div>
+        <div class="row"><span class="sw" style="background:rgba(57,135,229,.35)"></span>Foot traffic now (MTA + campus data)</div>
+      </div>
+    </div>
+
+    <aside class="panel right">
+      <div class="kpis">
+        <div class="kpi hero"><div class="lab">Profit, week to date</div><div class="val" id="k_profit">$0</div><div class="sub" id="k_profitSub">after card fees, venue share, ops, hardware write-off</div></div>
+        <div class="kpi"><div class="lab">Rentals</div><div class="val" id="k_rentals">0</div><div class="sub" id="k_rentalsSub">today 0</div></div>
+        <div class="kpi"><div class="lab">Revenue</div><div class="val" id="k_rev">$0</div><div class="sub" id="k_revSub">fees + forfeits</div></div>
+        <div class="kpi"><div class="lab">Service level</div><div class="val" id="k_service">–</div><div class="sub">rentals ÷ (rentals + empty-station misses)</div></div>
+        <div class="kpi"><div class="lab">Packs ready</div><div class="val" id="k_avail">–</div><div class="sub" id="k_availSub">in use now 0</div></div>
+        <div class="kpi"><div class="lab">Missed demand</div><div class="val" id="k_unmet">0</div><div class="sub" id="k_unmetSub">no station 0 · empty 0</div></div>
+        <div class="kpi"><div class="lab">Return problems</div><div class="val" id="k_fail">0</div><div class="sub" id="k_failSub">station full · forfeits 0</div></div>
+      </div>
+      <div class="chartbox">
+        <h4>Rentals vs missed demand, by hour</h4>
+        <canvas id="chHourly" height="150"></canvas>
+      </div>
+      <div class="chartbox">
+        <h4>Packs ready across the network</h4>
+        <canvas id="chAvail" height="120"></canvas>
+      </div>
+      <div class="chartbox">
+        <h4>Live event feed</h4>
+        <div class="feed" id="feed"></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ───────────── MONTE CARLO ───────────── -->
+<section class="view" id="view-mc">
+  <div class="page">
+    <h2>Monte Carlo: what does a week really look like?</h2>
+    <p class="lede">One simulated week is one possible outcome. Here the same network (from the Live tab) is replayed hundreds of times with different random customers. The spread shows the risk; the confidence interval shows how sure we are of the average. If the interval won't tighten, an input needs better data.</p>
+    <div class="controls">
+      <div class="field"><label>Replications</label>
+        <select id="mcReps"><option>50</option><option selected>200</option><option>500</option><option>1000</option></select></div>
+      <button class="btn primary" id="mcRun">Run Monte Carlo</button>
+      <span class="hint" id="mcCfg"></span>
+    </div>
+    <div class="progress"><div id="mcProg"></div></div>
+    <div class="grid4" id="mcStats"></div>
+    <div class="grid2" style="margin-top:14px">
+      <div class="card"><h3>Distribution of weekly profit</h3><canvas id="chMcHist" height="220"></canvas>
+        <div class="hint">Each bar counts simulated weeks. Dashed line = break-even.</div></div>
+      <div class="card"><h3>Convergence of the estimate</h3><canvas id="chMcConv" height="220"></canvas>
+        <div class="hint">Running mean of weekly profit with its 95% confidence band. A narrowing band means more runs add little; the remaining uncertainty is in the inputs (see Sensitivity).</div></div>
+    </div>
+    <div class="card" style="margin-top:14px"><h3>Reality check against real operators</h3><div id="mcBench"></div></div>
+  </div>
+</section>
+
+<!-- ───────────── A/B ───────────── -->
+<section class="view" id="view-ab">
+  <div class="page">
+    <h2>Layout A/B: is a new station worth it?</h2>
+    <p class="lede">Both layouts face <b>exactly the same customers</b> in each replication (common random numbers), so the difference is due to the layout, not luck. This answers investor questions like "what is one more station worth per week?"</p>
+    <div class="grid2">
+      <div class="card"><h3>Layout A <span class="hint">(current Live network)</span></h3><div id="abA" class="hint"></div></div>
+      <div class="card"><h3>Layout B</h3><div class="sitelist" id="abB"></div></div>
+    </div>
+    <div class="controls" style="margin-top:14px">
+      <div class="field"><label>Replications</label><select id="abReps"><option>50</option><option selected>150</option><option>300</option></select></div>
+      <button class="btn primary" id="abRun">Compare layouts</button>
+    </div>
+    <div class="progress"><div id="abProg"></div></div>
+    <div id="abResult"></div>
+    <div class="card" style="margin-top:14px"><h3>Weekly profit, A vs B (paired runs)</h3><canvas id="chAB" height="200"></canvas></div>
+  </div>
+</section>
+
+<!-- ───────────── SENSITIVITY ───────────── -->
+<section class="view" id="view-sens">
+  <div class="page">
+    <h2>Sensitivity: which unknowns move profit the most?</h2>
+    <p class="lede">Each input is pushed to the low and high end of its plausible range while everything else stays put. Long bars are the inputs that most change the answer, so they are what to measure first (street survey, pilot data). Bar labels show each input's data confidence.</p>
+    <div class="controls">
+      <div class="field"><label>Replications per point</label><select id="sensReps"><option>20</option><option selected>40</option><option>80</option></select></div>
+      <button class="btn primary" id="sensRun">Run sensitivity</button>
+      <span class="hint" id="sensBase"></span>
+    </div>
+    <div class="progress"><div id="sensProg"></div></div>
+    <div class="card"><canvas id="chTornado" height="380"></canvas>
+      <div class="hint">Blue = weekly profit with the input at its <b>low</b> value; orange = at its <b>high</b> value. Vertical line = base case.</div></div>
+    <div id="sensInsight"></div>
+  </div>
+</section>
+
+<!-- ───────────── DATA ───────────── -->
+<section class="view" id="view-data">
+  <div class="page">
+    <h2>Data &amp; sources: how real is each number?</h2>
+    <p class="lede">Every input the simulation uses, where it came from, and how much to trust it. Investors should be able to check any number. Low-confidence inputs are exactly what the pilot and the daily research routine are working to replace.</p>
+    <div class="card"><h3>Confidence mix of model inputs</h3><div id="confSummary"></div></div>
+    <div class="card" style="margin-top:14px"><table class="data" id="paramTable"></table></div>
+  </div>
+</section>
+
+<!-- ───────────── MODEL ───────────── -->
+<section class="view" id="view-model">
+  <div class="page model" id="modelDoc"></div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
