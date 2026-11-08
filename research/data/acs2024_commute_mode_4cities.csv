@@ -1,0 +1,5 @@
+geoid,name,total_workers,drove_alone_pct,transit_pct,walk_pct,bike_pct,wfh_pct,transit_moe90_pp
+16000US1245000,"Miami, FL",265512,58.3,7.7,4.1,1.6,15.7,1.2
+16000US1714000,"Chicago, IL",1430663,43.5,20.5,7.1,1.8,17.6,0.8
+16000US3651000,"New York, NY",4070607,20.6,48.7,9.6,1.7,12.5,0.6
+16000US4752006,"Nashville-Davidson metropolitan government (balance), TN",405721,66.5,1.6,2.0,0.4,18.0,0.5

@@ -73,7 +73,7 @@ Brief each research agent fully, because it sees nothing else. Give it:
 Ask agents to prefer primary sources and open datasets they can actually read or download, such as MTA, NYC Open Data, Citi Bike trip data, US Census/ACS, BTS, WeGo, Metro Nashville open data, peer-reviewed papers, and manufacturer specs. Avoid SEO blog stats with no underlying source.
 
 ### 5. Verify before writing anything
-Spawn one verifier subagent. Give it the claims (number + URL) that will change `PARAMETERS.md`, and have it open each URL and confirm the number actually appears there and means what was claimed. Drop or downgrade anything that fails.
+Spawn one verifier subagent. Give it the claims (number + URL) that will change `PARAMETERS.md`, and have it open each URL and confirm the number actually appears there and means what was claimed. Drop or downgrade anything that fails. Numbers from open-data APIs (MTA, CTA, ACS, USNO) are quicker to re-query yourself with one `curl`; send the verifier the HTML/PDF claims.
 
 Numbers that sound right but can't be traced are the main way a simulation loses credibility with investors, which is the exact concern raised in the meeting.
 
@@ -91,6 +91,7 @@ Numbers that sound right but can't be traced are the main way a simulation loses
   - how to fit it from the data you have,
   - a validation check.
 - Where useful, write small, runnable Python in `research/scripts/` that fits a distribution to a saved dataset and prints parameters. Run it, and put the fitted result in `PARAMETERS.md`. A fitted number beats a quoted one.
+- **Jointly calibrated parameters** (e.g. `p_aware` is tuned against `p_low_peak` to hit the benchmark band): don't move one default alone. Sweep the new value and report rentals and profit at each point, then leave the default unless the calibration is redone.
 
 ### 7. Refine the queue and the routine
 - **`research/TOPICS_QUEUE.md`:** mark done items. Add the new questions today's work raised. Re-rank by *value of information*: which unknown, if resolved, would most change kiosk placement or profit? Sensitivity on profit is the yardstick, per the game plan.

@@ -60,4 +60,10 @@ For every number, record the sample, the year, the geography, and why it transfe
 - Agent-based persona generation from ACS/LEHD.
 
 ## Where good data lives (append lessons here)
-- (empty — add as you learn)
+- **NYC hourly transit:** MTA Subway Hourly Ridership `data.ny.gov/resource/5wq4-mkjj` (SoQL `date_extract_hh`, `date_trunc_ymd`, `sum(ridership)`; entries only, no exits). Complex IDs: 307 = 116 St–Columbia, 604 = 161 St–Yankee Stadium. Event days show up clearly as hourly spikes.
+- **ACS without a key:** `api.censusreporter.org/1.0/data/show/latest?table_ids=B08301&geo_ids=16000US…` (api.census.gov now needs a key).
+- **Sun times:** USNO `aa.usno.navy.mil/api/rstt/oneday` (timeanddate.com blocks bots).
+- **Chicago:** CTA 'L' daily entries `data.cityofchicago.org/resource/5neh-572f` (daily only, no hourly).
+- **Nashville / Miami:** no open hourly transit data (WeGo needs a request form; Miami-Dade monthly PDFs).
+- **Outages:** EIA Electric Power Annual Table 11.3 (state SAIFI/SAIDI); Con Ed's annual reliability report to the NY PSC (by network).
+- **Phone SoC by hour:** no open dataset found (checked 2026-11-08). Ferreira 2011 is the only open, extractable source. Don't re-search unless a new dataset is named.
