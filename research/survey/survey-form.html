@@ -1,0 +1,438 @@
+<title>Charj Street Survey</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Layout: one phone-width column — session bar, then the interview card, then live quotas.
+   Big tap targets; the accent is Charj's battery yellow. */
+:root {
+  --bg: #f6f6f3; --surface: #ffffff; --surface-2: #efefea; --line: #dcdcd4;
+  --fg: #16171a; --fg-2: #4a4b50; --muted: #7b7c80;
+  --accent: #f2c418; --accent-ink: #1b1a14; --accent-soft: #fff4c2;
+  --sel: #16171a; --sel-ink: #ffffff;
+  --good: #0c8a0c; --warn: #b77900; --bad: #c43333;
+  --display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --r: 12px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121315; --surface: #1b1c1f; --surface-2: #25272b; --line: #33353a;
+  --fg: #f1f0ec; --fg-2: #c5c4bd; --muted: #8f8f8a;
+  --accent: #ffd23f; --accent-ink: #17160f; --accent-soft: #3a3214;
+  --sel: #f1f0ec; --sel-ink: #121315;
+  --good: #4fc94f; --warn: #f0b23a; --bad: #ff7a7a; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #121315; --surface: #1b1c1f; --surface-2: #25272b; --line: #33353a;
+  --fg: #f1f0ec; --fg-2: #c5c4bd; --muted: #8f8f8a;
+  --accent: #ffd23f; --accent-ink: #17160f; --accent-soft: #3a3214;
+  --sel: #f1f0ec; --sel-ink: #121315;
+  --good: #4fc94f; --warn: #f0b23a; --bad: #ff7a7a; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.4; }
+.wrap { max-width: 560px; margin: 0 auto; padding-block: 12px 96px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 14px; }
+h1 { font-family: var(--display); font-size: 22px; margin: 0; letter-spacing: -0.2px; text-wrap: balance; }
+h2 { font-family: var(--display); font-size: 15px; margin: 0 0 8px; }
+.top { display: flex; align-items: center; gap: 10px; }
+.mark { width: 34px; height: 34px; border-radius: 9px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-weight: 800; font-family: var(--display); flex: none; }
+.top p { margin: 0; color: var(--muted); font-size: 12.5px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+label.f { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--fg-2); font-weight: 600; min-width: 0; }
+select, input[type=text], input[type=number] { width: 100%; font: inherit; font-size: 16px; color: var(--fg); background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+input[type=number] { font-family: var(--mono); font-size: 22px; text-align: center; }
+.status { display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: var(--fg-2); flex-wrap: wrap; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
+.dot.ok { background: var(--good); } .dot.wait { background: var(--warn); } .dot.err { background: var(--bad); }
+.pill { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--line); color: var(--fg-2); letter-spacing: 0.3px; }
+.pill.block { background: var(--accent-soft); border-color: var(--accent); color: var(--fg); }
+
+.q { display: flex; flex-direction: column; gap: 8px; padding: 12px 0; border-top: 1px solid var(--line); }
+.q:first-of-type { border-top: 0; padding-top: 0; }
+.qh { display: flex; gap: 8px; align-items: baseline; }
+.qn { font-family: var(--mono); font-size: 12px; color: var(--muted); flex: none; }
+.qt { font-weight: 600; }
+.say { color: var(--fg-2); font-size: 13.5px; font-style: italic; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: inherit; font-size: 14px; padding: 10px 12px; min-height: 44px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface-2); color: var(--fg); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--sel); color: var(--sel-ink); border-color: var(--sel); font-weight: 600; }
+.chip:focus-visible, .btn:focus-visible, select:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.offer { background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 10px; padding: 12px; font-size: 15.5px; line-height: 1.45; }
+.offer b { font-family: var(--mono); }
+.tog { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--fg-2); min-height: 40px; cursor: pointer; }
+.tog input { width: 20px; height: 20px; accent-color: var(--fg); }
+
+.btn { font: inherit; font-weight: 700; font-size: 15px; border-radius: 12px; padding: 12px 16px; min-height: 48px; border: 1px solid var(--line); background: var(--surface-2); color: var(--fg); cursor: pointer; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.ghost { background: transparent; }
+.btn:disabled { opacity: 0.5; cursor: default; }
+.savebar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--surface); border-top: 1px solid var(--line);
+  padding-block: 10px calc(10px + env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.savebar .inner { max-width: 560px; margin: 0 auto; display: flex; gap: 8px; }
+.savebar .btn.primary { flex: 1; }
+.err { color: var(--bad); font-size: 13px; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(84px + env(safe-area-inset-bottom, 0px)); background: var(--sel); color: var(--sel-ink); padding: 10px 14px; border-radius: 10px; font-weight: 600; font-size: 14px; z-index: 30; }
+
+.quota { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+.quota th { text-align: left; font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 6px; }
+.quota td { padding: 6px; border-top: 1px solid var(--line); }
+.bar { height: 8px; border-radius: 99px; background: var(--surface-2); overflow: hidden; min-width: 60px; }
+.bar > i { display: block; height: 100%; background: var(--fg); border-radius: 99px; }
+.bar.done > i { background: var(--good); }
+.tablewrap { overflow-x: auto; }
+.hint { color: var(--muted); font-size: 12.5px; }
+.banner { border: 1px solid var(--warn); background: var(--accent-soft); border-radius: 10px; padding: 10px 12px; font-size: 13.5px; }
+textarea { width: 100%; min-height: 120px; font-family: var(--mono); font-size: 11px; background: var(--surface-2); color: var(--fg); border: 1px solid var(--line); border-radius: 10px; padding: 8px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div class="mark">⚡</div>
+    <div>
+      <h1>Charj Street Survey</h1>
+      <p>Morningside Heights battery survey · 60 seconds · anonymous</p>
+    </div>
+  </div>
+
+  <div id="banner" class="banner" hidden></div>
+
+  <section class="card" aria-label="Shift setup">
+    <h2>Your shift</h2>
+    <div class="grid2">
+      <label class="f">Surveyor initials<input type="text" id="surveyor" maxlength="4" autocomplete="off" placeholder="e.g. TY"></label>
+      <label class="f">Site<select id="site">
+        <option value="S116">S116 · 116 St station</option>
+        <option value="S110">S110 · 110 St station</option>
+        <option value="S96">S96 · 96 St station</option>
+        <option value="CU">CU · Columbia gates (sidewalk)</option>
+        <option value="BWY">BWY · Broadway 110–114</option>
+        <option value="AMS">AMS · Amsterdam 106–111</option>
+        <option value="BC">BC · Barnard gate</option>
+      </select></label>
+      <label class="f">Weather<select id="weather">
+        <option value="clear">Clear</option><option value="cloudy">Cloudy</option><option value="rain">Rain</option><option value="cold">Cold (below 2 °C)</option><option value="hot">Hot</option>
+      </select></label>
+      <label class="f">Time block<select id="blockSel">
+        <option value="auto">Auto (from clock)</option><option value="A">A · 08–10</option><option value="B">B · midday</option><option value="C">C · 17–19</option><option value="D">D · 21–23</option><option value="X">X · off schedule</option>
+      </select></label>
+    </div>
+    <label class="tog"><input type="checkbox" id="pilot"> Pilot interviews (excluded from analysis)</label>
+    <div class="status"><span class="pill block" id="blockPill">Block –</span><span id="clock" class="pill">--:-- ET</span><span class="dot" id="syncDot"></span><span id="syncText">Connecting…</span></div>
+  </section>
+
+  <section class="card" aria-label="Interview">
+    <div class="row" style="justify-content:space-between;margin-bottom:6px">
+      <h2 style="margin:0">Interview <span id="countMine" class="hint"></span></h2>
+      <button class="btn" id="refused" type="button">+ Refused</button>
+    </div>
+    <div class="say">"Hi! We're Vanderbilt students researching phone charging in the neighbourhood. One minute, anonymous, no names. Want a candy or sticker either way?"</div>
+
+    <div class="q" id="dirQ">
+      <div class="qh"><span class="qn">IN/OUT</span><span class="qt">Is this person entering or leaving the subway?</span></div>
+      <div class="chips" data-field="direction"><button class="chip" data-v="IN">Entering</button><button class="chip" data-v="OUT">Leaving</button></div>
+    </div>
+
+    <div class="q">
+      <div class="qh"><span class="qn">Q1</span><span class="qt">Battery %</span></div>
+      <div class="say">"Could you check your phone's battery percentage right now and tell me the number?"</div>
+      <div class="row">
+        <input type="number" id="battery" inputmode="numeric" min="0" max="100" placeholder="0–100" style="max-width:140px">
+        <label class="tog"><input type="checkbox" id="seen" checked> I saw the screen</label>
+        <button class="chip" id="dead" type="button" aria-pressed="false">Phone dead</button>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qh"><span class="qn">Q2</span><span class="qt">Phone</span></div>
+      <div class="chips" data-field="phone">
+        <button class="chip" data-v="iphone_11_or_older">iPhone 11 or older</button><button class="chip" data-v="iphone_12">iPhone 12</button><button class="chip" data-v="iphone_13">iPhone 13</button><button class="chip" data-v="iphone_14">iPhone 14</button><button class="chip" data-v="iphone_15">iPhone 15</button><button class="chip" data-v="iphone_16">iPhone 16</button><button class="chip" data-v="iphone_17">iPhone 17</button><button class="chip" data-v="android_new">Android ≤2 yrs</button><button class="chip" data-v="android_old">Android older</button><button class="chip" data-v="unknown">Not sure</button>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qh"><span class="qn">Q3</span><span class="qt">Charger with them right now?</span></div>
+      <div class="chips" data-field="carry"><button class="chip" data-v="powerbank">Power bank</button><button class="chip" data-v="cable">Cable only</button><button class="chip" data-v="neither">Neither</button></div>
+    </div>
+
+    <div class="q">
+      <div class="qh"><span class="qn">Q4</span><span class="qt">Next chance to charge</span></div>
+      <div class="say">"When will you next be somewhere you can charge?"</div>
+      <div class="chips" data-field="next_charge"><button class="chip" data-v="<30">&lt; 30 min</button><button class="chip" data-v="30-60">30–60 min</button><button class="chip" data-v="1-3h">1–3 h</button><button class="chip" data-v="3h+">3 h +</button></div>
+    </div>
+
+    <div class="q">
+      <div class="qh"><span class="qn">Q5</span><span class="qt">Heading next</span></div>
+      <div class="chips" data-field="heading"><button class="chip" data-v="campus">Class / campus</button><button class="chip" data-v="work">Work</button><button class="chip" data-v="home">Home nearby</button><button class="chip" data-v="out_of_area">Out of the area</button><button class="chip" data-v="food_nearby">Food / drink nearby</button><button class="chip" data-v="other">Other</button></div>
+    </div>
+
+    <div class="q">
+      <div class="qh"><span class="qn">Q6</span><span class="qt">Rental power banks</span></div>
+      <div class="say">"Ever used a rental power bank, like the station ones in Asia or at airports? Heard of Charj?"</div>
+      <div class="grid2">
+        <div><div class="hint">Used one before</div><div class="chips" data-field="used_before"><button class="chip" data-v="Y">Yes</button><button class="chip" data-v="N">No</button></div></div>
+        <div><div class="hint">Heard of Charj</div><div class="chips" data-field="heard_charj"><button class="chip" data-v="Y">Yes</button><button class="chip" data-v="N">No</button></div></div>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qh"><span class="qn">Q7</span><span class="qt">Offer: read exactly as shown</span></div>
+      <div class="offer" id="offer"></div>
+      <div class="chips" data-field="intent"><button class="chip" data-v="definitely">Definitely</button><button class="chip" data-v="probably">Probably</button><button class="chip" data-v="not_sure">Not sure</button><button class="chip" data-v="probably_not">Probably not</button><button class="chip" data-v="definitely_not">Definitely not</button></div>
+    </div>
+
+    <div class="q">
+      <div class="qh"><span class="qn">Q8</span><span class="qt">"At what battery % do you start to worry?"</span></div>
+      <input type="number" id="worry" inputmode="numeric" min="0" max="100" placeholder="%" style="max-width:140px">
+    </div>
+
+    <div class="q">
+      <div class="qh"><span class="qn">Q9</span><span class="qt">"Mainly a student here, work here, live here, or visiting?"</span></div>
+      <div class="chips" data-field="role"><button class="chip" data-v="student">Student</button><button class="chip" data-v="work">Work</button><button class="chip" data-v="live">Live</button><button class="chip" data-v="visit">Visiting</button></div>
+    </div>
+    <div id="formErr" class="err" role="alert"></div>
+  </section>
+
+  <section class="card" aria-label="Quotas">
+    <h2>Progress toward the plan</h2>
+    <div id="quotaEmpty" class="hint">No interviews yet. Saved interviews from every surveyor appear here live.</div>
+    <div class="tablewrap"><table class="quota" id="quota" hidden></table></div>
+  </section>
+
+  <section class="card" aria-label="Export">
+    <h2>Export for analysis</h2>
+    <p class="hint" style="margin:0 0 8px">Downloads every response and refusal as the CSV that <span style="font-family:var(--mono)">analyze_street_survey.py</span> reads.</p>
+    <div class="row"><button class="btn" id="exportBtn" type="button">Download CSV</button><button class="btn ghost" id="showCsv" type="button">Show CSV text</button></div>
+    <textarea id="csvBox" hidden readonly aria-label="CSV text"></textarea>
+  </section>
+</div>
+
+<div class="savebar"><div class="inner">
+  <button class="btn ghost" id="clear" type="button">Clear</button>
+  <button class="btn primary" id="save" type="button">Save interview</button>
+</div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const FIELDS = ['kind','id','ts','date','time_et','block','site','direction','surveyor','battery_pct','battery_seen','dead','phone','carry','next_charge','heading','used_before','heard_charj','arm_price','arm_hold','intent','worry_pct','role','weather','pilot'];
+  const SUBWAY = new Set(['S116','S110','S96']);
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+  };
+
+  // ── shift settings remembered on this phone ──
+  for (const id of ['surveyor', 'site', 'weather', 'blockSel']) {
+    const el = $(id); const v = store.get('charj_' + id, null);
+    if (v !== null) el.value = v;
+    el.addEventListener('change', () => { store.set('charj_' + id, el.value); refreshShift(); });
+  }
+  $('pilot').checked = store.get('charj_pilot', false);
+  $('pilot').addEventListener('change', () => store.set('charj_pilot', $('pilot').checked));
+
+  // ── time in New York and the plan's time blocks ──
+  function nyParts(d = new Date()) {
+    const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', weekday: 'short', hourCycle: 'h23' }).formatToParts(d).map(x => [x.type, x.value]));
+    return { date: `${p.year}-${p.month}-${p.day}`, hm: `${p.hour}:${p.minute}`, h: +p.hour + (+p.minute) / 60, wd: p.weekday };
+  }
+  function autoBlock() {
+    const { h, wd } = nyParts();
+    const sat = wd === 'Sat', sun = wd === 'Sun';
+    if (!sat && !sun && h >= 8 && h < 10) return 'A';
+    if ((!sat && !sun && h >= 12 && h < 14) || (sat && h >= 13 && h < 15)) return 'B';
+    if (!sat && !sun && h >= 17 && h < 19) return 'C';
+    if (!sun && h >= 21 && h < 23) return 'D';
+    return 'X';
+  }
+  const block = () => $('blockSel').value === 'auto' ? autoBlock() : $('blockSel').value;
+  function refreshShift() {
+    const b = block();
+    $('blockPill').textContent = b === 'X' ? 'Off schedule (X)' : `Block ${b}`;
+    $('clock').textContent = nyParts().hm + ' ET';
+    $('dirQ').hidden = !SUBWAY.has($('site').value);
+  }
+  refreshShift(); setInterval(refreshShift, 30000);
+
+  // ── randomised offer (Q7) ──
+  let arm;
+  function newArm() {
+    const r = new Uint8Array(2); crypto.getRandomValues(r);
+    arm = { price: r[0] % 2 ? '2' : '1', hold: r[1] % 2 ? '30' : '0' };
+    $('offer').innerHTML = `"If a station 2 minutes from here let you borrow a power bank for <b>$${arm.price} an hour</b>, ` +
+      (arm.hold === '30' ? `with a <b>$30</b> temporary card hold that's released when you return it, ` : `with <b>no deposit</b>, `) +
+      `and return it at any station, would you use it <b>right now</b>?"`;
+  }
+
+  // ── chips ──
+  const answers = {};
+  document.querySelectorAll('.chips[data-field]').forEach(group => {
+    group.addEventListener('click', e => {
+      const b = e.target.closest('.chip'); if (!b) return;
+      const f = group.dataset.field;
+      const on = b.getAttribute('aria-pressed') === 'true';
+      group.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', 'false'));
+      if (!on) { b.setAttribute('aria-pressed', 'true'); answers[f] = b.dataset.v; } else delete answers[f];
+    });
+    group.querySelectorAll('.chip').forEach(c => { c.type = 'button'; c.setAttribute('aria-pressed', 'false'); });
+  });
+  $('dead').addEventListener('click', () => {
+    const on = $('dead').getAttribute('aria-pressed') !== 'true';
+    $('dead').setAttribute('aria-pressed', String(on));
+    if (on) { $('battery').value = 0; $('seen').checked = true; }
+  });
+
+  function resetForm() {
+    for (const k of Object.keys(answers)) delete answers[k];
+    document.querySelectorAll('.chips .chip').forEach(c => c.setAttribute('aria-pressed', 'false'));
+    $('battery').value = ''; $('worry').value = ''; $('seen').checked = true;
+    $('dead').setAttribute('aria-pressed', 'false'); $('formErr').textContent = '';
+    newArm();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  $('clear').addEventListener('click', resetForm);
+
+  function rid() { const a = new Uint8Array(8); crypto.getRandomValues(a); return Array.from(a, x => x.toString(16).padStart(2, '0')).join(''); }
+  function baseRow(kind) {
+    const t = nyParts();
+    return { kind, id: rid(), ts: new Date().toISOString(), date: t.date, time_et: t.hm, block: block(), site: $('site').value,
+      surveyor: ($('surveyor').value || '').trim().toUpperCase().slice(0, 4), weather: $('weather').value, pilot: $('pilot').checked ? '1' : '0' };
+  }
+
+  function toast(msg) { const t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => t.hidden = true, 1800); }
+
+  // ── save: queue on the phone first, then sync to the shared store ──
+  let pending = store.get('charj_pending', []);
+  let mine = store.get('charj_mine', 0);
+  function persistPending() { store.set('charj_pending', pending); renderSync(); }
+
+  $('save').addEventListener('click', () => {
+    const errs = [];
+    if (!$('surveyor').value.trim()) errs.push('Enter your initials (shift setup).');
+    const bat = $('battery').value === '' ? NaN : Number($('battery').value);
+    if (!(bat >= 0 && bat <= 100)) errs.push('Q1 battery % must be 0–100.');
+    if (!answers.intent) errs.push('Q7 answer is required.');
+    if (SUBWAY.has($('site').value) && !answers.direction) errs.push('Choose entering or leaving the subway.');
+    const worry = $('worry').value === '' ? '' : Number($('worry').value);
+    if (worry !== '' && !(worry >= 0 && worry <= 100)) errs.push('Q8 must be 0–100.');
+    if (errs.length) { $('formErr').textContent = errs.join(' '); return; }
+    const row = { ...baseRow('response'), direction: SUBWAY.has($('site').value) ? answers.direction : '',
+      battery_pct: String(Math.round(bat)), battery_seen: $('seen').checked ? '1' : '0', dead: $('dead').getAttribute('aria-pressed') === 'true' ? '1' : '0',
+      phone: answers.phone || '', carry: answers.carry || '', next_charge: answers.next_charge || '', heading: answers.heading || '',
+      used_before: answers.used_before || '', heard_charj: answers.heard_charj || '', arm_price: arm.price, arm_hold: arm.hold,
+      intent: answers.intent, worry_pct: worry === '' ? '' : String(Math.round(worry)), role: answers.role || '' };
+    pending.push(row); mine++; store.set('charj_mine', mine); persistPending();
+    toast(`Saved interview #${mine} on this phone`);
+    resetForm(); flush();
+  });
+  $('refused').addEventListener('click', () => {
+    if (!$('surveyor').value.trim()) { $('formErr').textContent = 'Enter your initials (shift setup).'; return; }
+    pending.push(baseRow('refusal')); persistPending(); toast('Refusal logged'); flush();
+  });
+
+  // ── shared store ──
+  let db = null, canWrite = true, remote = new Map(), loaded = false, flushing = false, storeState = 'connecting';
+  function renderSync() {
+    const n = pending.length;
+    const dot = $('syncDot'); dot.className = 'dot';
+    if (storeState === 'ok' && n === 0) { dot.classList.add('ok'); $('syncText').textContent = 'All saved to the team sheet'; }
+    else if (storeState === 'readonly') { dot.classList.add('err'); $('syncText').textContent = `${n} kept on this phone (no edit access)`; }
+    else if (storeState === 'none') { dot.classList.add('wait'); $('syncText').textContent = `${n} kept on this phone only`; }
+    else { dot.classList.add('wait'); $('syncText').textContent = n ? `${n} waiting to sync` : 'Connecting to the team sheet…'; }
+    $('countMine').textContent = mine ? `· ${mine} by you` : '';
+  }
+  async function flush() {
+    if (!db || flushing || !canWrite) return;
+    flushing = true;
+    try {
+      while (pending.length) {
+        const row = pending[0];
+        try { await db.collection('responses').doc(row.id).set(row); }
+        catch (e) {
+          if (e && (e.code === 'invalid_argument' || e.code === 'not_granted')) {
+            canWrite = false; storeState = 'readonly';
+            showBanner('This page can’t save to the team sheet with your access. Ask Toby to share it with you as a Contributor. Your interviews stay on this phone, and you can still export them below.');
+          }
+          break;
+        }
+        pending.shift(); persistPending();
+      }
+    } finally { flushing = false; renderSync(); }
+  }
+  setInterval(flush, 20000);
+  addEventListener('online', flush);
+  function showBanner(msg) { $('banner').textContent = msg; $('banner').hidden = false; }
+
+  // ── quotas ──
+  const TARGETS = { blocks: { A: 100, B: 100, C: 110, D: 110 }, types: { Subway: 200, Campus: 120, 'Retail & dining': 150 }, total: 600 };
+  const typeOf = s => SUBWAY.has(s) ? 'Subway' : (s === 'CU' || s === 'BC') ? 'Campus' : 'Retail & dining';
+  function allRows() {
+    const m = new Map(remote);
+    for (const r of pending) m.set(r.id, r);
+    return [...m.values()];
+  }
+  function renderQuota() {
+    const rows = allRows().filter(r => r.pilot !== '1');
+    const resp = rows.filter(r => r.kind === 'response'), ref = rows.filter(r => r.kind === 'refusal');
+    $('quotaEmpty').hidden = rows.length > 0;
+    $('quota').hidden = rows.length === 0;
+    if (!rows.length) return;
+    const bar = (n, t) => `<div class="bar ${n >= t ? 'done' : ''}"><i style="width:${Math.min(100, n / t * 100).toFixed(0)}%"></i></div>`;
+    const cnt = f => resp.filter(f).length;
+    let h = `<tr><th>Goal</th><th>Done</th><th>Target</th><th style="width:40%"></th></tr>`;
+    h += `<tr><td><b>All interviews</b></td><td>${resp.length}</td><td>${TARGETS.total}</td><td>${bar(resp.length, TARGETS.total)}</td></tr>`;
+    for (const [b, t] of Object.entries(TARGETS.blocks)) { const n = cnt(r => r.block === b); h += `<tr><td>Block ${b}</td><td>${n}</td><td>${t}</td><td>${bar(n, t)}</td></tr>`; }
+    for (const [ty, t] of Object.entries(TARGETS.types)) { const n = cnt(r => typeOf(r.site) === ty); h += `<tr><td>${ty}</td><td>${n}</td><td>${t}</td><td>${bar(n, t)}</td></tr>`; }
+    const p1 = cnt(r => r.arm_price === '1'), p2 = cnt(r => r.arm_price === '2');
+    h += `<tr><td>Offer $1 / $2</td><td>${p1} / ${p2}</td><td>150 each</td><td>${bar(Math.min(p1, p2), 150)}</td></tr>`;
+    const low = cnt(r => Number(r.battery_pct) < 20);
+    h += `<tr><td>Below 20% battery</td><td>${low}</td><td>60+</td><td>${bar(low, 60)}</td></tr>`;
+    const rate = resp.length / Math.max(1, resp.length + ref.length);
+    h += `<tr><td>Response rate</td><td colspan="3">${(rate * 100).toFixed(0)}% (${ref.length} refusals logged)</td></tr>`;
+    $('quota').innerHTML = h;
+  }
+
+  // ── export ──
+  function csv() {
+    const esc = v => { const s = v === undefined || v === null ? '' : String(v); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    const rows = allRows().sort((a, b) => (a.ts || '').localeCompare(b.ts || ''));
+    return [FIELDS.join(','), ...rows.map(r => FIELDS.map(f => esc(r[f])).join(','))].join('\n') + '\n';
+  }
+  let downloads = null;
+  $('exportBtn').addEventListener('click', async () => {
+    const text = csv();
+    const name = `charj_street_survey_${nyParts().date}.csv`;
+    if (downloads) {
+      try { await downloads.save({ filename: name, data: text }); return; }
+      catch (e) { if (e && e.code === 'declined') return; }
+    }
+    $('csvBox').hidden = false; $('csvBox').value = text; $('csvBox').select();
+  });
+  $('showCsv').addEventListener('click', () => { $('csvBox').hidden = !$('csvBox').hidden; if (!$('csvBox').hidden) { $('csvBox').value = csv(); } });
+
+  // ── boot ──
+  newArm(); renderSync(); renderQuota();
+  (async () => {
+    const c = window.claude;
+    if (!c || !c.use) { storeState = 'none'; renderSync(); showBanner('Open this page from its claude.ai link to save to the team sheet. Interviews are kept on this phone until then.'); return; }
+    c.use('downloads').then(d => { downloads = d; if (!d) $('exportBtn').textContent = 'Show CSV to copy'; });
+    const user = await c.use('user');
+    if (user && user.can) { try { const w = await user.can('data.write'); if (w === false) { canWrite = false; storeState = 'readonly'; showBanner('You can view progress but not save to the team sheet. Ask Toby to share it with you as a Contributor. Interviews stay on this phone and can be exported.'); } } catch {} }
+    db = await c.use('db');
+    if (!db) { storeState = 'none'; renderSync(); showBanner('The team sheet isn’t available in this view (sign in to claude.ai). Interviews are kept on this phone; export them below.'); return; }
+    const timer = setTimeout(() => { if (!loaded) { $('syncText').textContent = 'Team sheet not reachable yet; saving on this phone'; } }, 10000);
+    db.collection('responses').onSnapshot(snap => {
+      remote = new Map(snap.docs.map(d => [d.id, d.data()]));
+      if (!snap.metadata.fromCache) { loaded = true; clearTimeout(timer); if (storeState !== 'readonly') storeState = 'ok'; }
+      renderQuota(); renderSync();
+    }, err => { clearTimeout(timer); storeState = 'none'; renderSync(); });
+    flush();
+  })();
+})();
+</script>
