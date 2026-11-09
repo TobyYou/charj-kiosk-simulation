@@ -57,7 +57,7 @@ export const PARAMS = {
   footfall_hospital: { group: 'Footfall', label: 'Mount Sinai Morningside, people/day', value: 6000, low: 4000, high: 9000, unit: 'people/day', conf: 'ASSUMPTION', source: 'No data (staff + patients + visitors)', url: '' },
 
   p_aware: { group: 'Demand', label: 'Share of passers-by who know Charj and would consider it', value: 0.01, low: 0.004, high: 0.03, unit: 'fraction', conf: 'CALIBRATED', source: 'Unmeasured pre-launch. Default calibrated so a 13-station network lands inside real operators\' 0.5–3 rentals per station per day (Brick, ChargeSPOT, Recharge.city NYC). Raw guess of 3% gave ~7/station/day, above every comparable.', url: 'https://articles.brick.tech/the-10-most-frequently-asked/' },
-  p_low_peak: { group: 'Demand', label: 'Share of phones below ~20% at the evening peak', value: 0.12, low: 0.04, high: 0.20, unit: 'fraction', conf: 'LOW', source: 'Indirect: Ferreira 2011 (4,035 users, verified): mean SoC 67%, lowest hourly mean 65% at midnight, daily minimum ≈30%. A normal approximation (SD 25 pts) gives ≈4–8% below 20% in the evening; 0.12 kept because p_aware is calibrated against it (2026-11-08: range low widened 0.05→0.04). No hourly SoC histogram exists in open literature; street survey needed.', url: 'https://ubicomp.oulu.fi/files/pervasive11.pdf' },
+  p_low_peak: { group: 'Demand', label: 'Share of phones below ~20% at the evening peak', value: 0.12, low: 0.05, high: 0.20, unit: 'fraction', conf: 'LOW', source: 'Indirect: Ferreira 2011 (4,035 users, verified): mean SoC 67%, lowest hourly mean 65% at midnight, daily minimum ≈30%. A normal approximation (SD 25 pts) gives ≈4–8% below 20% in the evening; 0.12 kept because p_aware is calibrated against it (2026-11-08: range low widened 0.05→0.04). No hourly SoC histogram exists in open literature; street survey needed. 2026-11-09: low end raised 0.04→0.05: Li et al. 2018 (Sherlock, 51 users) 41% of discharge sessions end <20% and 5% die; Guo et al. 2017 (80k Android, China) charge-start levels roughly uniform and ~1 battery death per user per month — both inconsistent with ≈4%. Value 0.12 kept: only c = p_aware×p_low_peak×p_seek is identified (STATS_TOOLKIT M7).', url: 'https://ubicomp.oulu.fi/files/pervasive11.pdf' },
   p_seek: { group: 'Demand', label: 'Low-battery users with no charger of their own who would rent', value: 0.30, low: 0.15, high: 0.50, unit: 'fraction', conf: 'LOW', source: 'Tang et al. IMWUT 2020 (n=2,032): 92% feel low-battery anxiety, anxiety starts ~20%; 70% use portable chargers only occasionally, 10% frequently', url: 'https://arxiv.org/abs/2004.07662' },
   wtp_mid_hourly:   { group: 'Demand', label: 'Price where half of willing users decline', value: 3.0, low: 2.0, high: 5.0, unit: '$/hr', conf: 'ASSUMPTION',
                       source: 'No data. Campus test: $30 hold + $2/hr deterred some users (meeting).', ref: '' },
@@ -82,14 +82,15 @@ export const PARAMS = {
 export const PROFILES = {
   conf: { subway: 'HIGH', campus: 'ASSUMPTION', dining: 'ASSUMPTION', hospital: 'ASSUMPTION' },
   source: {
-    subway: 'MTA Subway Hourly Ridership (data.ny.gov 5wq4-mkjj), fall 2026: average of the 116 St entry profile (PM-peaked, people leaving campus) and the pooled 96/103/116/125 St profile (AM-peaked), approximating entries + exits',
+    subway: 'Weekday: MTA Subway Origin-Destination Ridership Estimate 2025 (data.ny.gov y2qv-fytt), 116 St–Columbia, entries (trips originating) + exits (trips destined, spread 50/50 over start hour and next), all weekdays 2025. Evening exits are only ~0.5× entries. Weekend: MTA hourly entries (5wq4-mkjj), fall 2026 blend.',
     campus: 'Shape assumption (class hours 9–17, library evenings)',
     dining: 'Shape assumption (lunch and dinner peaks)',
     hospital: 'Shape assumption (shift changes 7:00 / 19:00)',
   },
-  url: { subway: 'https://data.ny.gov/resource/5wq4-mkjj.json' },
+  url: { subway: 'https://data.ny.gov/resource/y2qv-fytt' },
   weekday: {
-    subway:   [0.55, 0.15, 0.1, 0.1, 0.15, 0.4, 1.15, 3.8, 6.55, 4.45, 3.45, 3.8, 4.45, 5.05, 6.0, 7.55, 9.95, 12.2, 9.35, 7.2, 5.85, 4.1, 2.4, 1.35],
+    // 2026-11-09: replaced with MTA OD 2025 entries+exits at 116 St (research/scripts/od_footfall_profile.mjs). Old blend: [0.55,0.15,0.1,0.1,0.15,0.4,1.15,3.8,6.55,4.45,3.45,3.8,4.45,5.05,6.0,7.55,9.95,12.2,9.35,7.2,5.85,4.1,2.4,1.35]
+    subway:   [0.73, 0.25, 0.12, 0.09, 0.19, 0.81, 1.82, 3.7, 6.67, 7.01, 5.24, 4.76, 5.25, 5.49, 6.04, 7.27, 8.87, 10.3, 7.75, 5.58, 4.49, 3.44, 2.56, 1.57],
     campus:   [0.5,0.3,0.1,0.1,0.1,0.2,0.8,3.0,6.5,8.5,9.5,9.5,9.0,9.0,8.5,8.0,7.0,5.5,4.0,3.5,3.0,2.0,1.4,1.0],
     dining:   [1.2,0.6,0.3,0.1,0.1,0.2,0.8,2.5,4.0,4.0,4.2,6.5,9.5,8.0,5.5,4.8,5.0,6.5,9.0,9.0,7.0,4.5,3.2,2.0],
     hospital: [2.0,1.5,1.2,1.2,1.5,2.5,5.5,7.0,6.5,6.0,5.5,5.5,5.5,5.5,5.5,5.5,5.0,5.0,4.5,4.0,3.5,3.2,3.0,3.0],

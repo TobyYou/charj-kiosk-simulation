@@ -1,0 +1,78 @@
+metric,value,unit,note
+rows_scanned_all_nyc,5088365,count,
+rows_unparseable,2879,count,missing start coords or timestamps
+n_trips_in_box,49397,count,start inside box
+days_covered,31,days,weekday=22 weekend=9
+trips_per_day_mean,1593.5,trips/day,
+dur_p10_min,2.94,minutes,all trips in box
+dur_p25_min,4.7,minutes,all trips in box
+dur_p50_min,8.74,minutes,all trips in box
+dur_p75_min,16.91,minutes,all trips in box
+dur_p90_min,28.07,minutes,all trips in box
+dur_p99_min,58.5,minutes,all trips in box
+dur_mean_min,13.04,minutes,all trips in box
+n_clean_1min_24h,49395,count,dropped <1 min and >24 h
+lognorm_mu_ln_min,2.1891,ln(minutes),MLE on clean trips
+lognorm_sigma_ln_min,0.8593,ln(minutes),MLE (1/n) on clean trips
+lognorm_median_min,8.93,minutes,exp(mu)
+share_gt_60min,0.00921,share,
+share_gt_180min,0.00045,share,
+share_gt_24h,4e-05,share,
+share_lt_1min,0.0,share,false starts/redocks
+member_share,0.8382,share,member=41403 casual=7994 other=0
+casual_share,0.1618,share,
+ebike_share,0.7898,share,electric=39013 classic=10384
+share_end_in_box,0.2265,share,end lat/lng inside same box (of trips with end coords)
+share_end_elsewhere,0.7735,share,
+n_missing_end_coords,95,count,no end coords (often lost/unreturned bikes)
+dist_median_km,1.641,km,haversine start->end
+dist_p90_km,5.27,km,haversine start->end
+share_dist_lt_50m,0.0183,share,same-station round trips approx
+weekday_hour_00_trips_per_day,17.95,trips/day,total=395
+weekday_hour_01_trips_per_day,10.18,trips/day,total=224
+weekday_hour_02_trips_per_day,4.82,trips/day,total=106
+weekday_hour_03_trips_per_day,3.5,trips/day,total=77
+weekday_hour_04_trips_per_day,3.05,trips/day,total=67
+weekday_hour_05_trips_per_day,10.68,trips/day,total=235
+weekday_hour_06_trips_per_day,38.0,trips/day,total=836
+weekday_hour_07_trips_per_day,89.95,trips/day,total=1979
+weekday_hour_08_trips_per_day,120.36,trips/day,total=2648
+weekday_hour_09_trips_per_day,79.82,trips/day,total=1756
+weekday_hour_10_trips_per_day,71.36,trips/day,total=1570
+weekday_hour_11_trips_per_day,79.82,trips/day,total=1756
+weekday_hour_12_trips_per_day,88.59,trips/day,total=1949
+weekday_hour_13_trips_per_day,96.77,trips/day,total=2129
+weekday_hour_14_trips_per_day,111.77,trips/day,total=2459
+weekday_hour_15_trips_per_day,123.91,trips/day,total=2726
+weekday_hour_16_trips_per_day,142.32,trips/day,total=3131
+weekday_hour_17_trips_per_day,170.18,trips/day,total=3744
+weekday_hour_18_trips_per_day,144.27,trips/day,total=3174
+weekday_hour_19_trips_per_day,97.14,trips/day,total=2137
+weekday_hour_20_trips_per_day,74.18,trips/day,total=1632
+weekday_hour_21_trips_per_day,56.41,trips/day,total=1241
+weekday_hour_22_trips_per_day,42.41,trips/day,total=933
+weekday_hour_23_trips_per_day,30.32,trips/day,total=667
+weekend_hour_00_trips_per_day,27.33,trips/day,total=246
+weekend_hour_01_trips_per_day,17.67,trips/day,total=159
+weekend_hour_02_trips_per_day,14.67,trips/day,total=132
+weekend_hour_03_trips_per_day,8.44,trips/day,total=76
+weekend_hour_04_trips_per_day,5.22,trips/day,total=47
+weekend_hour_05_trips_per_day,5.33,trips/day,total=48
+weekend_hour_06_trips_per_day,15.78,trips/day,total=142
+weekend_hour_07_trips_per_day,29.56,trips/day,total=266
+weekend_hour_08_trips_per_day,53.22,trips/day,total=479
+weekend_hour_09_trips_per_day,71.22,trips/day,total=641
+weekend_hour_10_trips_per_day,85.22,trips/day,total=767
+weekend_hour_11_trips_per_day,106.33,trips/day,total=957
+weekend_hour_12_trips_per_day,115.11,trips/day,total=1036
+weekend_hour_13_trips_per_day,103.22,trips/day,total=929
+weekend_hour_14_trips_per_day,97.89,trips/day,total=881
+weekend_hour_15_trips_per_day,87.0,trips/day,total=783
+weekend_hour_16_trips_per_day,89.11,trips/day,total=802
+weekend_hour_17_trips_per_day,81.33,trips/day,total=732
+weekend_hour_18_trips_per_day,86.78,trips/day,total=781
+weekend_hour_19_trips_per_day,63.11,trips/day,total=568
+weekend_hour_20_trips_per_day,49.56,trips/day,total=446
+weekend_hour_21_trips_per_day,41.67,trips/day,total=375
+weekend_hour_22_trips_per_day,33.33,trips/day,total=300
+weekend_hour_23_trips_per_day,25.89,trips/day,total=233

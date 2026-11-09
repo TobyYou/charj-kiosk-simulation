@@ -58,3 +58,12 @@ Each entry should cover:
 - George & Xia (2011): closed queueing network to size total fleet N.
 - **Use for Charj:** analytic cross-check of `packs_per_kiosk` (currently 6 of 8 slots, ASSUMPTION). The DES remains the main tool.
 - **Status:** reference only.
+
+## M7. Funnel identifiability: calibrate one conversion rate c, not p_aware and p_low separately (added 2026-11-09, run)
+- **Equation:** λ_z(t) = footfall_z(t) × p_low(h)/p_low_peak × **c** × scenario, with c = p_aware × p_low_peak × p_seek (renters per passer-by at the evening peak).
+- **Serves:** demand/arrival component; calibration against the 0.5–3 rentals/station/day benchmark band.
+- **Finding:** the engine's outputs are bit-identical whether c is reached via p_aware or via p_low_peak (data/conversion_calibration_sweep.csv, CRN seeds). Benchmarks therefore identify only c. Benchmark band 0.5–3 ↔ c ≈ 5.9e-5 – 3.9e-4 (13-station normal week, after the 2026-11-09 OD footfall profile). Rentals scale ≈ linearly with c (≈7,800–8,500 rentals/station/day per unit c) until empty stations bite above c ≈ 3e-4.
+- **Prior:** put the uncertainty on c directly: Gamma prior mapped from M5's Gamma(2.5, 1.5) on rentals/station/day (mean 1.67) ⇒ c centred ≈ 2.0e-4, 90% interval ≈ 0.5e-4 – 4.7e-4 (rentals 0.4–3.5/day; ASSUMPTION, via the near-linear map). The current default c = 3.6e-4 gives 2.82/day, near the top edge of the band.
+- **How to fit with pilot data:** posterior on station rate (M5) → divide by simulated rentals per unit c at that site's footfall ⇒ posterior on c. A street survey fixes p_low_peak and p_seek separately; then p_aware = c / (p_low_peak × p_seek) becomes a derived, not tuned, number.
+- **Validation:** after any change to footfall, LOW_BATTERY_CURVE, prices or stocking, re-run `node research/scripts/calibrate_conversion.mjs` and check the band mapping.
+- **Implication for sensitivity analysis (M4):** p_aware, p_low_peak and p_seek must not be treated as three independent inputs in Sobol/tornado runs; vary c as one factor (its range from the band) plus the hourly shape.

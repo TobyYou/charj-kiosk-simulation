@@ -67,3 +67,6 @@ For every number, record the sample, the year, the geography, and why it transfe
 - **Nashville / Miami:** no open hourly transit data (WeGo needs a request form; Miami-Dade monthly PDFs).
 - **Outages:** EIA Electric Power Annual Table 11.3 (state SAIFI/SAIDI); Con Ed's annual reliability report to the NY PSC (by network).
 - **Phone SoC by hour:** no open dataset found (checked 2026-11-08). Ferreira 2011 is the only open, extractable source. Don't re-search unless a new dataset is named.
+- MTA Subway Origin-Destination estimates on data.ny.gov (2025: y2qv-fytt; 2026+: 28vm-gjqr) give hourly exits by station — the hourly-ridership dataset has entries only. (added 2026-11-09)
+- Low-battery evidence ladder (2026-11-09): session-level papers (Li 2018 arXiv 1801.04069; Guo 2017 IEEE Access) > vendor surveys (Anker, Vodafone; self-report, promotional). No source gives share-below-20% by hour.
+
