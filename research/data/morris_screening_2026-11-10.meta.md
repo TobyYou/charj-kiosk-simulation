@@ -1,0 +1,18 @@
+# morris_screening_2026-11-10.csv
+
+- **What:** simulator output (not external data). Morris elementary-effects screening (Morris 1991; μ* = mean|EE| per Campolongo, Cariboni & Saltelli 2007) of the 13-station Charj network, normal week, nightly rebalancing on, for weekly profit (profitPerWeek, $/week) and rentals per station per day (rentalsPerStationDay).
+- **Produced by:** `node research/scripts/morris_screening.mjs 20 10 20261110` on 2026-11-10.
+- **Design:** k=35 factors, r=20 trajectories, p=4 levels, Δ=0.6667 (in unit-cube coordinates; each factor mapped uniformly to [low, high] from params.js). Trajectory start drawn uniformly from the grid {0, 1/3, 2/3, 1}^k, factors moved once each in random order (+Δ if feasible, else −Δ). No trajectory-spread optimisation (Campolongo 2007) was applied. 758 model evaluations × 10 reps = 7580 simulation runs.
+- **EE definition:** EE_i = [f(x + Δe_i) − f(x)]/Δ with x in [0,1]; so EE is in output units per full low→high range of the factor. μ = mean EE (sign), μ* = mean |EE|, σ = SD of EE across trajectories (high σ/μ* ⇒ nonlinear or interacting).
+- **Seeds / CRN:** every evaluation is the mean of replicate(..., 10, null, 20261110) i.e. seeds 20261110..20261119 (common random numbers). Design PRNG: mulberry32(20261110).
+- **Funnel:** c = p_aware × p_low_peak × p_seek is one factor (STATS_TOOLKIT M7), range 5.9e-5–3.9e-4 (benchmark band 0.5–3 rentals/station/day), varied via p_aware = c/(0.12×0.3); p_low_peak and p_seek held at defaults and not screened. Default c = 3.60e-4.
+- **Excluded:** conf FACT parameters (price_per_hour, slots_per_kiosk, hardware_cost_set, pack_replace_cost, placement_fee, deposit, …) and any with low = high. packs_per_kiosk is rounded to an integer (grid 4, 5.33→5, 6.67→7, 8).
+- **Base point (all defaults, seeds A):** profit $507.1 ± 47.5/week (95% CI), rentals 2.811 ± 0.113/station/day. μ*% = μ*_profit / base profit.
+- **Noise floor:** trajectory 1 re-run with disjoint seeds 20361110..20361119: single-EE Monte Carlo sd under CRN ≈ $19.7/wk (profit), 0.0334 (rentals); the μ* of a null factor would be ≈ √(2/π)·sd = $15.7 / 0.0267. Column below_2x_noise flags μ* < 2× that. For reference, without CRN the single-EE sd would be ≈ √2·SE/Δ = $51.4 / 0.1223. The sd estimate comes from only k=35 paired EEs in one trajectory, so it is itself rough (±~12%).
+- **Runtime:** 148 s total (Node v19.7.0).
+- **Columns:** rank_profit, factor, conf, range_low, range_high, default, mu_star_profit_usd_wk, mu_star_profit_pct_base, mu_profit_usd_wk, sigma_profit_usd_wk, sigma_over_mustar_profit, below_2x_noise_profit, rank_rps, mu_star_rps, mu_rps, sigma_rps, sigma_over_mustar_rps, below_2x_noise_rps.
+- **Caveats:** Morris is a screening ranking, not a variance decomposition; r=20 gives coarse σ. Ranges are params.js low/high, several of them ASSUMPTION; μ* scales with range width. Results are for the normal-week scenario only.
+
+## History (2026-11-10)
+- First run (before the grace-policy fix in engine.js) is kept as `morris_screening_2026-11-10_prefix.csv`. There, packs_per_kiosk ranked #2 for profit (μ* $389/wk) because full stations kept billing failed returners and forfeited their deposits. After adding `grace_failed_return` (billing stops at the first failed return attempt; no forfeit), packs_per_kiosk dropped to #5 (μ* $176/wk). This CSV is the post-fix run with the same seeds (20261110), r = 20, reps = 10.
+- Known remaining artefact: rebalancing only triggers when a station holds > desired+1 packs, so with 7–8 packs per 8-slot station it never fires and rebalance cost is $0. Profit at 7 packs ($627/wk) > 6 packs ($494/wk) partly for this reason; failed-return goodwill cost is modelled only as one CS ticket.

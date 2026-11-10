@@ -22,11 +22,11 @@ export function walkDist(a, b) {
 // `footfallKey` points to a parameter in params.js (people passing per day).
 // `profile` picks the hour-of-day curve. `weekendFactor` (subway) = MTA 2024 avg weekend day ÷ avg weekday. `pOutside` is the share of trips from here that leave the area.
 export const ZONES = [
-  { id: 'z96',   name: '96 St subway (1/2/3)',            lat: 40.793919, lon: -73.972323, type: 'subway', footfallKey: 'footfall_96st',   profile: 'subway',   pOutside: 0.45, weekendFactor: 0.73 },
-  { id: 'z103',  name: '103 St subway (1)',               lat: 40.799446, lon: -73.968379, type: 'subway', footfallKey: 'footfall_103st',  profile: 'subway',   pOutside: 0.45, weekendFactor: 0.6 },
-  { id: 'z110',  name: 'Cathedral Pkwy–110 St subway (1)', lat: 40.803967, lon: -73.966847, type: 'subway', footfallKey: 'footfall_110st',  profile: 'subway',   pOutside: 0.45, weekendFactor: 0.62 },
-  { id: 'z116',  name: '116 St–Columbia subway (1)',      lat: 40.807722, lon: -73.96411, type: 'subway', footfallKey: 'footfall_116st',  profile: 'subway',   pOutside: 0.45, weekendFactor: 0.49 },
-  { id: 'z125',  name: '125 St subway (1)',               lat: 40.815581, lon: -73.958372, type: 'subway', footfallKey: 'footfall_125st',  profile: 'subway',   pOutside: 0.45, weekendFactor: 0.55 },
+  { id: 'z96',   name: '96 St subway (1/2/3)',            lat: 40.793919, lon: -73.972323, type: 'subway', footfallKey: 'footfall_96st',   profile: 'sub96',   pOutside: 0.45, weekendFactor: 0.73 },
+  { id: 'z103',  name: '103 St subway (1)',               lat: 40.799446, lon: -73.968379, type: 'subway', footfallKey: 'footfall_103st',  profile: 'sub103',   pOutside: 0.45, weekendFactor: 0.6 },
+  { id: 'z110',  name: 'Cathedral Pkwy–110 St subway (1)', lat: 40.803967, lon: -73.966847, type: 'subway', footfallKey: 'footfall_110st',  profile: 'sub110',   pOutside: 0.45, weekendFactor: 0.62 },
+  { id: 'z116',  name: '116 St–Columbia subway (1)',      lat: 40.807722, lon: -73.96411, type: 'subway', footfallKey: 'footfall_116st',  profile: 'sub116',   pOutside: 0.45, weekendFactor: 0.49 },
+  { id: 'z125',  name: '125 St subway (1)',               lat: 40.815581, lon: -73.958372, type: 'subway', footfallKey: 'footfall_125st',  profile: 'sub125',   pOutside: 0.45, weekendFactor: 0.55 },
   { id: 'zCU',   name: 'Columbia main campus',            lat: 40.8075, lon: -73.9626, type: 'campus', footfallKey: 'footfall_columbia', profile: 'campus', pOutside: 0.15 },
   { id: 'zBC',   name: 'Barnard College',                 lat: 40.809486, lon: -73.963551, type: 'campus', footfallKey: 'footfall_barnard',  profile: 'campus', pOutside: 0.15 },
   { id: 'zTC',   name: 'Teachers College',                lat: 40.810344, lon: -73.960504, type: 'campus', footfallKey: 'footfall_tc',       profile: 'campus', pOutside: 0.20 },

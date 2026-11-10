@@ -588,7 +588,7 @@ function renderData() {
     }
   }
   html += `<tr class="grp"><td colspan="6">Time-of-day patterns</td></tr>`;
-  for (const k of ['subway', 'campus', 'dining', 'hospital']) {
+  for (const k of Object.keys(PROFILES.conf).filter(k => k !== 'subway')) {
     const u = PROFILES.url && PROFILES.url[k];
     html += `<tr><td>Hourly footfall curve: ${k}</td><td colspan="3">24 hourly shares, weekday and weekend (local time, ET)</td><td><span class="badge b-${PROFILES.conf[k]}">${PROFILES.conf[k]}</span></td><td>${u ? `<a href="${u}" target="_blank" rel="noopener">${PROFILES.source[k]}</a>` : PROFILES.source[k]}</td></tr>`;
   }

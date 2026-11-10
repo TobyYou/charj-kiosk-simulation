@@ -3,31 +3,36 @@
 Yardstick: how much resolving the unknown would move profit/week or kiosk placement (see the sensitivity tab and STATS_TOOLKIT M4).
 
 ## Open
-1. [ ] **Share of phones below 20% by hour (p_low_peak).** 2026-11-09: still no hourly histogram. New bounds: Li 2018 (41% of sessions end <20%), Guo 2017 (charge-start ≈ uniform, ~1 death/user/month) → low end raised to 0.05 (P051). Only the product c is identified (M7), so this matters for *placement and hourly shape*, not the calibrated total. Next: Hosio CHI 2016 full text (closed access — ask Toby for Vanderbilt library access); street survey remains the real fix. → P012, P051
-2. [ ] **Decide where to centre c** (P055). Default c = 3.6e-4 gives 2.82 rentals/station/day (top of the 0.5–3 band, $492/week); the M5 prior centre 2.0e-4 gives ≈1.6/day (≈$240/week). Profit roughly halves. Present both to Toby; until then report profit as a function of c.
-3. [ ] **Per-station OD footfall profiles:** today only 116 St OD drives the shared weekday 'subway' profile. Pull MTA OD 2025 (y2qv-fytt) for 96/103/110/125 St and weekends; give residential stations their own (AM-exit-light) shape; consider 2026 OD (28vm-gjqr) once a full term is in.
-4. [ ] **Morris → Sobol global sensitivity** (M4), now with c as ONE factor (M7), not three. Needs numpy/SALib (needs Toby or a venv); or write Morris in plain JS.
-5. [ ] **Daily-cap scenario:** add a $5–8/day cap lever to the engine (P049). Cap-vs-adoption/chargeback evidence: NOT FOUND again 2026-11-09 (only unverified '<1% non-return' Trustdata snippet).
-6. [ ] **Event egress in engine:** replace the uniform 90-min spread with the MTA-fitted split (≈25/62/10/3 %, P040). Event low-battery multiplier: UK festival report (67% recharged at festival) unreachable (HTTP 500); still ASSUMPTION.
-7. [ ] **Nashville footfall:** WeGo system 29.9k/weekday and time-of-day shares found (P056), but no pedestrian counts near Vanderbilt. Next: Vanderbilt campus pedestrian/shuttle (VandyRide) ridership; Nashville Downtown Partnership PDF by OCR; WeGo data request (needs Toby).
-8. [ ] **Power-bank hold durations:** Citi Bike is far too short (median 9 min vs ChargeSPOT <60% in 1 h). Look for a better proxy: library laptop/charger loan durations, umbrella-share or locker-rental durations; INFORICH IR PDFs (needs PDF extraction).
-9. [ ] Citi Bike gravity-model β for return location (from the saved script: extend to an end-distance histogram).
-10. [ ] **Day-level random effect in the engine** (P035, CV 0.08).
-11. [ ] Measured drain underground on a modern 5G phone (P013 LOW).
-12. [ ] Shared power-bank non-return rate per rental (P053 gives only revenue-share proxies).
-13. [ ] Miami: term-time (Sep–Oct 2026) Metrorail reports once posted; Miami Beach last-call status.
+1. [ ] **Compute the hourly share of phones <20% ourselves** (p_low_peak, LOW_BATTERY_CURVE). 2026-11-10: no published hourly histogram exists, but two open datasets allow it: ExtraSensory (UCSD, 60 users, 215 MB zip, free, battery level per minute, UTC epoch → US/Pacific; participants carried an extra battery — bias) and GreenHub Farmer (Kaggle, 2.2 GB Parquet in ~30 MB parts, battery_level + timezone; Android, samples fire per 1% change → weight by time gap). Recipe: download ExtraSensory + 1–2 GreenHub US parts into a scratch folder, time-weight, compute share <20% by local hour, weekday vs weekend. Needs pyarrow for Parquet (not installed → ExtraSensory first, csv.gz). → P012, P051, P067
+2. [ ] **Fix two engine artefacts found by Morris** (P068): (a) rebalancing never fires at 7–8 packs per 8 slots (surplus test is packs > desired+1), so 7 packs looks $130/wk better than 6; (b) overdue fees and forfeits count as revenue with no churn/goodwill cost, so longer holds and forgetting *raise* profit. Then re-run Morris and only then Sobol on the top ~6 factors.
+3. [ ] **Rental-duration calibration** (P059, STATS_TOOLKIT M8): fit a 2-component mixture to ChargeSPOT bins; the engine has almost no <30-min rentals (0.2% vs 10%). Decide p_stay jointly with away_return_median_h; profit swings $336–652/wk over p_stay 0.7–0.3. Look for later INFORICH decks (FY2025, after the May 2025 minimum-fee change) for an updated histogram.
+4. [ ] **Decide where to centre c** (P055) — unchanged; now c 3.6e-4 → 2.80/day, $471/wk; c 1.8e-4 → 1.47/day, $230/wk.
+5. [ ] **Shared-pack phone charge speed:** Hangzhou test shows shared packs give 19% in 30 min (P062) vs our phone_rate_fast 1.8%/min (54% in 30 min). Check BST-0155 output spec (22.5 W claimed) vs typical 10 W shared packs. Morris says low profit impact, but it affects how long users stay (p_stay story).
+6. [ ] **weekendFactor: OD vs hourly entries** (P070): OD gives 0.70/0.71/0.62 at 103/110/125 St vs current 0.60/0.62/0.55. Pick one source and justify.
+7. [ ] **Daily-cap scenario:** add a $5–8/day cap lever (P049, P061). Caps are universal among comparables (Brick €5, HK$24–80, Naki €6); adoption effect still NOT FOUND.
+8. [ ] **Event egress in engine:** replace uniform 90-min spread with MTA-fitted split (P040). Event low-battery multiplier now bracketed (≈2× city-wide, ≈5× at venue, P063) but still ASSUMPTION.
+9. [ ] **Nashville footfall model:** Vanderbilt is car/walk (5% transit, 13% walk; P066), so WeGo stop counts (P065) are a small slice. Next: Vanderbilt parking/garage counts, campus dining swipes or Wi-Fi occupancy reports, Lower Broadway counters (none public yet).
+10. [ ] Citi Bike gravity-model β for return location.
+11. [ ] Day-level random effect in the engine (P035, CV 0.08).
+12. [ ] Measured drain underground on a modern 5G phone (P013 LOW).
+13. [ ] Per-rental non-return rate (still no operator figure; Japan ≥24 h share 5.1% is an upper reference for crossing 24 h).
+14. [ ] Miami: term-time Metrorail reports once posted.
 
 ## Needs Toby (fieldwork, accounts, or decisions)
 - [ ] Decide the calibration centre for c (queue #2): top-of-band 3.6e-4 vs prior-centre 2.0e-4.
-- [ ] Library access to Hosio et al. CHI 2016 full text (closed access).
+- [x] ~~Library access to Hosio CHI 2016~~ — open author copy found 2026-11-10 (P067).
 - [ ] Phone-charge street survey at candidate sites (GAME_PLAN §5) — now the single highest-value data item (queue #1).
 - [ ] Bench test: pack recharge time vs. fill level; real output W.
 - [ ] Export any pilot rental data from the app (anonymised aggregates).
 - [ ] Decide whether to add a daily cap ($5–8/day) — pricing decision, see P049.
-- [ ] Optional: `pip install numpy SALib` (or approve a project venv) for global sensitivity; Census API key if direct api.census.gov access is wanted.
+- [ ] Optional: `pip install pyarrow` (to read GreenHub Parquet, queue #1); `pip install numpy SALib` (or approve a project venv) for global sensitivity; Census API key if direct api.census.gov access is wanted.
 - [ ] WeGo ridership data request (form at wegotransit.com) for Nashville.
 
 ## Done
+- [x] 2026-11-10: Morris screening in plain JS (STATS_TOOLKIT M4, P068); found and fixed the failed-return billing artefact (grace_failed_return). Former item 4 (Sobol still open → item 2).
+- [x] 2026-11-10: Per-station OD footfall profiles for 96/103/110/116/125 St, weekday + weekend (P069). Former item 3.
+- [x] 2026-11-10: Power-bank hold-duration distribution found: ChargeSPOT Japan histogram + HK (P059, P060). Former item 8.
+- [x] 2026-11-10: Nashville WeGo route/stop ridership and Vanderbilt commute mode (P065, P066). Former item 7 (partial).
 - [x] 2026-11-09: Joint calibration p_aware × p_low_peak → single factor c (STATS_TOOLKIT M7, P055). Former item 2.
 - [x] 2026-11-09: MTA OD exits vs entries at 116 St; weekday subway profile replaced (P054). Former item 10.
 - [x] 2026-11-09: Citi Bike Morningside durations/end-locations (P052). Former item 5 (gravity β still open → item 9).

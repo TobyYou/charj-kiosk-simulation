@@ -66,10 +66,12 @@ export const PARAMS = {
   p_forget: { group: 'Behaviour', label: 'Renters who forget (go past 24 h)', value: 0.04, low: 0.01, high: 0.10, unit: 'fraction', conf: 'LOW', source: 'Indirect: Energy Monster 2020 cost of power banks sold (incl. kept by users) = 3.4% of revenue. Direct non-return rate not disclosed.', url: 'https://www.sec.gov/Archives/edgar/data/1834253/000104746921000594/a2242952zf-1.htm' },
   away_return_median_h: { group: 'Behaviour', label: 'Hold time if no station near destination (median)', value: 12, low: 6, high: 20, unit: 'hours', conf: 'ASSUMPTION',
                       source: 'No data; typically back the next morning', ref: '' },
+  grace_failed_return: { group: 'Behaviour', label: 'Clock paused after a failed return (1 = on)', value: 1, low: 1, high: 1, unit: 'flag', conf: 'FACT',
+                      source: 'GAME_PLAN §1.3 grace policy: customer service pauses the clock or adds hours if the user could not find a kiosk. Added 2026-11-10: before this, full stations raised profit (billing ran on, deposits forfeited; Morris run).', ref: 'GAME_PLAN.md' },
   p_recover_after_forfeit: { group: 'Behaviour', label: 'Forfeited packs eventually returned', value: 0.4, low: 0.1, high: 0.7, unit: 'fraction', conf: 'ASSUMPTION', source: 'No data', ref: '' },
 
-  p_stay:           { group: 'Behaviour', label: 'Renters who stay at the venue and return once charged', value: 0.5, low: 0.3, high: 0.7, unit: 'fraction', conf: 'LOW',
-                      source: 'Calibrated so rental durations match comparables: Brick median ≈45 min; ChargeSPOT >60% returned within 1 h', url: 'https://articles.brick.tech/the-10-most-frequently-asked/' },
+  p_stay:           { group: 'Behaviour', label: 'Renters who stay at the venue and return once charged', value: 0.5, low: 0.25, high: 0.75, unit: 'fraction', conf: 'LOW',
+                      source: 'Sets the rental-duration mix. 0.5 gives a 70-min median, between Brick (≈45 min, €1/h like Charj) and ChargeSPOT Japan Jun 2024 (median ≈133 min: 10% <30 min, 26% <1 h, 64% <3 h, 5% ≥24 h) / HK 2024 (30% of users <1 h, 76% <3 h). p_stay 0.3 → 121-min median, $652/wk; 0.7 → 59 min, $336/wk. 2026-11-10: range widened from 0.3–0.7; old target ">60% within 1 h" is a share of users and conflicts with INFORICH\'s own histogram (P059).', url: 'https://www2.jpx.co.jp/disc/93380/140120241113521342.pdf' },
 
   // ── Phone charging physics ──
   phone_rate_fast: { group: 'Battery', label: 'Phone charge speed below 80%', value: 1.8, low: 1.4, high: 2.1, unit: '%/min', conf: 'MED', source: 'Apple 20 W: 0→50% in ~30 min; Android Authority test, iPhone 15: 50% at 24 min, 75% at 42 min', url: 'https://www.androidauthority.com/best-iphone-15-chargers-3363259/' },
@@ -80,23 +82,40 @@ export const PARAMS = {
 
 // Hour-of-day share of daily footfall (24 values, local time). Labelled ASSUMPTION until fitted to MTA hourly data.
 export const PROFILES = {
-  conf: { subway: 'HIGH', campus: 'ASSUMPTION', dining: 'ASSUMPTION', hospital: 'ASSUMPTION' },
+  conf: { subway: 'HIGH', sub96: 'HIGH', sub103: 'HIGH', sub110: 'HIGH', sub116: 'HIGH', sub125: 'HIGH', campus: 'ASSUMPTION', dining: 'ASSUMPTION', hospital: 'ASSUMPTION' },
   source: {
     subway: 'Weekday: MTA Subway Origin-Destination Ridership Estimate 2025 (data.ny.gov y2qv-fytt), 116 St–Columbia, entries (trips originating) + exits (trips destined, spread 50/50 over start hour and next), all weekdays 2025. Evening exits are only ~0.5× entries. Weekend: MTA hourly entries (5wq4-mkjj), fall 2026 blend.',
+    sub96: 'Per-station weekday and weekend (Sat+Sun weighted by daily totals): MTA Subway OD Ridership Estimate 2025 (y2qv-fytt), all months, entries + exits (exits spread 50/50 over start hour and next). research/scripts/od_profiles_for_params.mjs. Added 2026-11-10.',
+    sub103: 'Per-station weekday and weekend (Sat+Sun weighted by daily totals): MTA Subway OD Ridership Estimate 2025 (y2qv-fytt), all months, entries + exits (exits spread 50/50 over start hour and next). research/scripts/od_profiles_for_params.mjs. Added 2026-11-10.',
+    sub110: 'Per-station weekday and weekend (Sat+Sun weighted by daily totals): MTA Subway OD Ridership Estimate 2025 (y2qv-fytt), all months, entries + exits (exits spread 50/50 over start hour and next). research/scripts/od_profiles_for_params.mjs. Added 2026-11-10.',
+    sub116: 'Per-station weekday and weekend (Sat+Sun weighted by daily totals): MTA Subway OD Ridership Estimate 2025 (y2qv-fytt), all months, entries + exits (exits spread 50/50 over start hour and next). research/scripts/od_profiles_for_params.mjs. Added 2026-11-10.',
+    sub125: 'Per-station weekday and weekend (Sat+Sun weighted by daily totals): MTA Subway OD Ridership Estimate 2025 (y2qv-fytt), all months, entries + exits (exits spread 50/50 over start hour and next). research/scripts/od_profiles_for_params.mjs. Added 2026-11-10.',
     campus: 'Shape assumption (class hours 9–17, library evenings)',
     dining: 'Shape assumption (lunch and dinner peaks)',
     hospital: 'Shape assumption (shift changes 7:00 / 19:00)',
   },
-  url: { subway: 'https://data.ny.gov/resource/y2qv-fytt' },
+  url: { subway: 'https://data.ny.gov/resource/y2qv-fytt', sub96: 'https://data.ny.gov/resource/y2qv-fytt', sub103: 'https://data.ny.gov/resource/y2qv-fytt', sub110: 'https://data.ny.gov/resource/y2qv-fytt', sub116: 'https://data.ny.gov/resource/y2qv-fytt', sub125: 'https://data.ny.gov/resource/y2qv-fytt' },
   weekday: {
     // 2026-11-09: replaced with MTA OD 2025 entries+exits at 116 St (research/scripts/od_footfall_profile.mjs). Old blend: [0.55,0.15,0.1,0.1,0.15,0.4,1.15,3.8,6.55,4.45,3.45,3.8,4.45,5.05,6.0,7.55,9.95,12.2,9.35,7.2,5.85,4.1,2.4,1.35]
     subway:   [0.73, 0.25, 0.12, 0.09, 0.19, 0.81, 1.82, 3.7, 6.67, 7.01, 5.24, 4.76, 5.25, 5.49, 6.04, 7.27, 8.87, 10.3, 7.75, 5.58, 4.49, 3.44, 2.56, 1.57],
+    // 2026-11-10: per-station OD profiles (zones now use these; 'subway' kept as the 116 St legacy curve).
+    sub96: [0.79, 0.28, 0.15, 0.11, 0.23, 0.74, 2.34, 6.03, 9.62, 6.5, 4.38, 4.11, 4.36, 4.72, 5.6, 6.97, 7.71, 8.88, 8.43, 5.82, 4.22, 3.46, 2.78, 1.77],
+    sub103: [0.93, 0.36, 0.18, 0.12, 0.19, 0.58, 1.85, 5.38, 8.87, 6.56, 4.69, 4.24, 4.5, 5, 5.42, 6.44, 7.33, 8.63, 8.48, 6.17, 4.88, 3.83, 3.28, 2.09],
+    sub110: [0.88, 0.36, 0.17, 0.13, 0.21, 0.66, 2.03, 4.98, 8.18, 5.89, 4.4, 4.23, 4.63, 5.03, 5.8, 7.31, 8.08, 9.1, 8.22, 5.99, 4.58, 3.89, 3.11, 2.14],
+    sub116: [0.73, 0.25, 0.12, 0.09, 0.19, 0.81, 1.82, 3.7, 6.67, 7.02, 5.24, 4.76, 5.25, 5.49, 6.04, 7.27, 8.87, 10.3, 7.75, 5.58, 4.49, 3.44, 2.56, 1.57],
+    sub125: [0.96, 0.41, 0.2, 0.16, 0.25, 0.83, 2.24, 4.74, 7.75, 6.54, 4.79, 4.32, 4.77, 5.15, 5.69, 6.58, 8.02, 9.87, 7.85, 5.74, 4.31, 4.04, 2.89, 1.89],
     campus:   [0.5,0.3,0.1,0.1,0.1,0.2,0.8,3.0,6.5,8.5,9.5,9.5,9.0,9.0,8.5,8.0,7.0,5.5,4.0,3.5,3.0,2.0,1.4,1.0],
     dining:   [1.2,0.6,0.3,0.1,0.1,0.2,0.8,2.5,4.0,4.0,4.2,6.5,9.5,8.0,5.5,4.8,5.0,6.5,9.0,9.0,7.0,4.5,3.2,2.0],
     hospital: [2.0,1.5,1.2,1.2,1.5,2.5,5.5,7.0,6.5,6.0,5.5,5.5,5.5,5.5,5.5,5.5,5.0,5.0,4.5,4.0,3.5,3.2,3.0,3.0],
   },
   weekend: {
     subway:   [1.85, 0.6, 0.35, 0.25, 0.2, 0.35, 0.65, 1.65, 2.65, 4.0, 5.05, 6.75, 9.25, 8.9, 7.55, 7.5, 7.7, 7.75, 7.15, 5.95, 4.8, 3.9, 3.15, 2.1],
+    // 2026-11-10: per-station OD (Sat+Sun). Old shared weekend 'subway' curve kept above.
+    sub96: [1.73, 0.96, 0.52, 0.33, 0.31, 0.55, 1.2, 2.15, 3.25, 4.36, 5.41, 6.23, 6.97, 7.51, 7.46, 7.58, 7.69, 7.64, 7.17, 5.95, 4.73, 4.05, 3.63, 2.6],
+    sub103: [1.99, 1.18, 0.65, 0.4, 0.32, 0.45, 0.99, 1.98, 3.27, 4.38, 5.21, 5.79, 6.48, 6.97, 6.95, 7.16, 7.47, 7.61, 7.36, 6.37, 5.39, 4.52, 4.12, 2.97],
+    sub110: [2.01, 1.33, 0.76, 0.44, 0.33, 0.47, 0.91, 1.63, 2.48, 3.67, 4.89, 5.88, 6.88, 7.5, 7.47, 7.66, 7.85, 7.93, 7.47, 6.25, 5.03, 4.37, 3.86, 2.92],
+    sub116: [2.02, 1.2, 0.72, 0.42, 0.28, 0.44, 0.89, 1.57, 2.34, 3.81, 4.95, 5.88, 7.33, 7.62, 7.45, 7.68, 7.91, 7.86, 7.35, 6.3, 4.99, 4.36, 3.82, 2.8],
+    sub125: [2.19, 1.48, 0.82, 0.5, 0.4, 0.52, 1.07, 1.81, 2.96, 3.91, 4.68, 5.55, 6.37, 7.08, 7.24, 7.47, 7.71, 7.73, 7.48, 6.24, 5.23, 4.63, 4.03, 2.9],
     campus:   [1.0,0.6,0.3,0.2,0.1,0.1,0.3,1.0,2.5,4.5,6.5,8.0,9.0,9.5,9.5,9.0,8.0,7.0,6.0,5.0,4.0,3.0,2.5,1.5],
     dining:   [2.5,1.8,1.0,0.4,0.1,0.1,0.3,1.0,2.5,4.5,6.5,8.0,8.5,7.0,5.5,4.8,5.0,6.5,8.0,8.0,6.5,4.5,3.5,3.0],
     hospital: [2.5,2.0,1.6,1.5,1.5,2.0,3.5,5.0,5.5,6.0,6.0,6.0,5.8,5.8,5.6,5.4,5.2,5.0,4.6,4.2,3.8,3.4,3.2,3.0],

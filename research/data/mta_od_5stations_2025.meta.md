@@ -1,0 +1,31 @@
+# mta_od_5stations_2025.csv — metadata
+
+- **Source:** MTA Subway Origin-Destination Ridership Estimate: 2025, data.ny.gov dataset `y2qv-fytt` (publisher: MTA). https://data.ny.gov/d/y2qv-fytt. Accessed via the Socrata SODA API, with no key.
+- **Downloaded:** 2026-11-10
+- **Stations:** complex ids are from MTA Subway Stations (`39hk-dx4f`), matched on GTFS stop id:
+  - 310 = 96 St (1 2 3), GTFS 120
+  - 309 = 103 St (1), GTFS 119
+  - 308 = Cathedral Pkwy (110 St) (1), GTFS 118
+  - 307 = 116 St–Columbia University (1), GTFS 117
+  - 306 = 125 St (1), GTFS 116. This is the elevated 1-line station at Broadway, not the A/B/C/D, 2/3 or 4/5/6 complexes.
+- **Dataset semantics** (from the API column descriptions, https://data.ny.gov/api/views/y2qv-fytt.json):
+  - Each row is one origin–destination pair × month × day_of_week (the name: "Monday"…"Sunday") × hour_of_day.
+  - `estimated_average_ridership` is the "estimated ridership for an origin-destination pair and hour of day, averaged by day of week over the calendar month". This makes it an average per day of that weekday in that month.
+  - `hour_of_day` is the trip **start** hour at the origin, rounded down.
+  - Estimates are scaled up from OMNY/MetroCard return-swipe data.
+- **Queries** (exact SoQL; run with `curl -G --data-urlencode`):
+  - Entries (trips originating): `https://data.ny.gov/resource/y2qv-fytt.csv?$select=origin_station_complex_id as sid,month,day_of_week,hour_of_day,sum(estimated_average_ridership) as rid&$where=origin_station_complex_id in('306','307','308','309','310')&$group=origin_station_complex_id,month,day_of_week,hour_of_day&$limit=50000`
+  - Exits (trips destined): the same query with `destination_station_complex_id` in place of `origin_station_complex_id`.
+  - Both queries returned 10,080 rows (5 stations × 12 months × 7 days × 24 hours), so no cells are missing. The year is 2025 only.
+- **Processing:** for each daytype, I summed the cell values over the included (month, day_of_week) cells and divided by the number of cells. The result is the average trips per day of that type, by start hour.
+  - `weekday`: Mon–Fri, all 12 months (60 cells)
+  - `saturday`, `sunday`: all 12 months (12 cells each)
+  - `*_term`: Feb, Mar, Apr, Sep, Oct, Nov (academic months)
+  - `*_summer`: Jun, Jul, Aug
+  - Columns: `station, station_complex_id, daytype, hour (0–23, ET start hour), entries, exits`. Exits are NOT hour-shifted in the file. `research/scripts/od_station_profiles.mjs` applies the 50/50 spread to the current and next hour.
+- **Check:** the 116 St `weekday` profile reproduces `research/data/mta_od_116st.csv` and PROFILES.weekday.subway to within 0.01 pp rounding (daily destined 10,940, originating 10,941).
+- **Caveats:**
+  - OD origin totals are below the hourly-ridership entry counts. For example, 116 St is ~10.9k here vs ~14.5k in the hourly dataset. Use the shapes and ratios, not the absolute levels.
+  - Destinations are inferred from the rider's next tap. Trips without an inferable destination, fare evasion, and bus legs are excluded or scaled.
+  - 96 St is a 1/2/3 express complex, so its counts include 2/3 riders.
+  - Holidays fall inside their month × day-of-week averages; they are not removed.

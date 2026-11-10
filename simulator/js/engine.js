@@ -330,7 +330,12 @@ export class Simulation {
     if (!target) {
       this.m.failedReturnAttempts++;
       this._hourly('failed');
-      if (r.attempts === 1) { this.m.csTickets++; this.m.csCost += this.P.cs_ticket_cost; }
+      if (r.attempts === 1) {
+        this.m.csTickets++; this.m.csCost += this.P.cs_ticket_cost;
+        // Grace policy (GAME_PLAN §1.3): customer service pauses the clock when the user
+        // cannot return. Billing stops here and no deposit is forfeited for this rental.
+        if (this.P.grace_failed_return) r.graceAt = this.t;
+      }
       k.failedReturns++;
       this.emit('failedReturn', { kiosk: k.id });
       r.phase = 'waiting'; r.x = k.x; r.y = k.y;
@@ -351,7 +356,8 @@ export class Simulation {
     const minutes = this.t - r.t0;
     this.m.durations.push(minutes);
     if (!r.forfeited) {
-      const hours = Math.max(1, Math.ceil(minutes / 60));
+      const billed = r.graceAt != null ? r.graceAt - r.t0 : minutes;
+      const hours = Math.max(1, Math.ceil(billed / 60));
       const fee = hours * this.P.price_per_hour;
       this.m.rentalRevenue += fee;
       this.m.cardFees += fee * this.P.stripe_pct + this.P.stripe_fixed;
@@ -364,7 +370,7 @@ export class Simulation {
   overdueSweep() {
     const cutoff = this.P.overdue_hours * 60;
     for (const r of [...this.active]) {
-      if (!r.forfeited && this.t - r.t0 >= cutoff) {
+      if (!r.forfeited && r.graceAt == null && this.t - r.t0 >= cutoff) {
         r.forfeited = true;
         this.m.forfeits++;
         this.m.forfeitRevenue += this.P.deposit;
