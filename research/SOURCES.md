@@ -76,3 +76,21 @@
 | S072 | Energy Monster FY2022 Form 20-F | SEC EDGAR | 2023-04 | https://www.sec.gov/Archives/edgar/data/1834253/000110465923052057/em-20221231x20f.htm | Cost of power banks sold incl. write-offs of forfeited packs: RMB 94.3/108.3/83.3 M (verified) |
 | S073 | GreenHub Farmer dataset (Kaggle hmatalonga/greenhub-farmer) and Pereira et al. EMSE 2021 | GreenHub / Univ. Coimbra | 2021–2026 | https://www.kaggle.com/datasets/hmatalonga/greenhub-farmer | 2.2 GB Parquet, battery_level + timezone per sample; candidate for hourly <20% share (not downloaded) |
 | S074 | ExtraSensory dataset | UC San Diego | 2017 | http://extrasensory.ucsd.edu/ | 60 users, free download (215 MB), battery state/level features (verified free; participants had extra battery) |
+| S075 | ExtraSensory primary data (per-UUID features & labels zip) + README | UC San Diego | 2017 (data 2015–16) | http://extrasensory.ucsd.edu/data/primary_data_files/ExtraSensory.per_uuid_features_labels.zip | P071: hourly low-battery shares (downloaded 2026-11-11, 225 MB, kept out of repo) |
+| S076 | BST-0155 UN38.3 test report CTB25030705701D01 | CTB Testing / Besiter | 2025-03-21 | ../reference/03-hardware-specs/ (UN38.3 report PDF, p.3) | P072: output ratings |
+| S077 | 充电宝给iPhone充电实测 (Leikeji) | 36Kr | 2025-07-29 | https://www.36kr.com/p/3399522465880451 | P073: pack→iPhone 16 Pro from 20%, 30-min gains (verified) |
+| S078 | Fast charge your iPhone | Apple Support | page dated 2026-10 | https://support.apple.com/102574 | P073: 50% in ~30 min claims (verified) |
+| S079 | iPhone power adapters compared (J. Cross) | Macworld | 2018-12-05 | https://www.macworld.com/article/3236904/iphone-power-adapters.html | P073: 18 W / 12 W / 5 W comparison (partial: 12 W only relative) |
+| S080 | Comparative test of iPhone 16 Pro with Apple chargers | ChargerLAB | 2024-12-11 | https://chargerlab.com/comparative-test-of-iphone-16-pro-with-apple-chargers-at-different-power | P073: time to full by wattage (verified) |
+| S081 | INFORICH FY2025 results deck (TSE 9338) | INFORICH / TDnet | 2026-02-13 | https://inforich.net/eir-parts/doc/9338/tdnet/2763465/00.pdf | P074, P075: 2025 KPIs by market |
+| S082 | INFORICH Q1-2025 results deck | INFORICH / TDnet | 2025-05-14 | https://www2.jpx.co.jp/disc/93380/140120250514550196.pdf | P074: Taiwan/Australia Q1 2025 |
+| S083 | INFORICH Q2-2025 results deck | INFORICH / TDnet | 2025-08-13 | https://inforich.net/eir-parts/doc/9338/tdnet/2675072/00.pdf | P075: ¥330 minimum → users leaving; monthly rentals 2025 |
+| S084 | Energy Monster FY2023 Form 20-F | SEC EDGAR | 2024-04 | https://www.sec.gov/Archives/edgar/data/1834253/000110465924050777/em-20231231x20f.htm | P075: orders 645.4M/552.8M/656.4M, POIs 1,233,900, price RMB1–2 (verified in text) |
+| S085 | 2025 Vanderbilt University Financial Report | Vanderbilt University | 2025-10 | https://cdn.vanderbilt.edu/vu-sub/wp-content/uploads/sites/291/2025/10/01145328/2025_VU_Financial_Report.pdf | P077 (p.5, verified) |
+| S086 | VUMC Impact Report — Governance | VUMC | 2025-08 | https://www.vanderbilthealth.org/sites/default/files/PDF%20Links/VUMC-Impact-Report-Governance-2025-0811.pdf | P077: ≈43,000 employees (verified) |
+| S087 | Vanderbilt admissions profile | Vanderbilt University | 2026 | https://admissions.vanderbilt.edu/profile/ | P077: Fall 2026 enrolment (verifier) |
+| S088 | Nashville Downtown Partnership 2025 Annual Report | NDP | 2025 | https://ctycms.com/tn-nashville/docs/2025-ndp-annual-report-final.pdf | P078 (verified pp.3, 12, 19) |
+| S089 | Football kickoff windows announced | Vanderbilt Athletics | 2026-06-10 | https://vucommodores.com/news/2026/06/10/football-kickoff-windows-announced | P078 (verified) |
+| S090 | NFL attendance 2025 | ESPN | 2026 | https://www.espn.com/nfl/attendance/_/year/2025/ | P078: Titans (verified) |
+| S091 | Bridgestone Arena by the numbers for 2025 | Williamson Source | 2026-01-03 | https://williamsonsource.com/bridgestone-arena-by-the-numbers-for-2025/ | P078 (partial: Predators inclusion unclear) |
+| S092 | Stripe pricing | Stripe | 2026 | https://stripe.com/pricing | P079: $15 dispute fee (verified) |

@@ -57,10 +57,10 @@ export const PARAMS = {
   footfall_hospital: { group: 'Footfall', label: 'Mount Sinai Morningside, people/day', value: 6000, low: 4000, high: 9000, unit: 'people/day', conf: 'ASSUMPTION', source: 'No data (staff + patients + visitors)', url: '' },
 
   p_aware: { group: 'Demand', label: 'Share of passers-by who know Charj and would consider it', value: 0.01, low: 0.004, high: 0.03, unit: 'fraction', conf: 'CALIBRATED', source: 'Unmeasured pre-launch. Default calibrated so a 13-station network lands inside real operators\' 0.5–3 rentals per station per day (Brick, ChargeSPOT, Recharge.city NYC). Raw guess of 3% gave ~7/station/day, above every comparable.', url: 'https://articles.brick.tech/the-10-most-frequently-asked/' },
-  p_low_peak: { group: 'Demand', label: 'Share of phones below ~20% at the evening peak', value: 0.12, low: 0.05, high: 0.20, unit: 'fraction', conf: 'LOW', source: 'Indirect: Ferreira 2011 (4,035 users, verified): mean SoC 67%, lowest hourly mean 65% at midnight, daily minimum ≈30%. A normal approximation (SD 25 pts) gives ≈4–8% below 20% in the evening; 0.12 kept because p_aware is calibrated against it (2026-11-08: range low widened 0.05→0.04). No hourly SoC histogram exists in open literature; street survey needed. 2026-11-09: low end raised 0.04→0.05: Li et al. 2018 (Sherlock, 51 users) 41% of discharge sessions end <20% and 5% die; Guo et al. 2017 (80k Android, China) charge-start levels roughly uniform and ~1 battery death per user per month — both inconsistent with ≈4%. Value 0.12 kept: only c = p_aware×p_low_peak×p_seek is identified (STATS_TOOLKIT M7).', url: 'https://ubicomp.oulu.fi/files/pervasive11.pdf' },
+  p_low_peak: { group: 'Demand', label: 'Share of phones below ~20% at the evening peak', value: 0.12, low: 0.05, high: 0.20, unit: 'fraction', conf: 'MED', source: 'ExtraSensory (UCSD, n=60, 2015–16; computed 2026-11-11): share of UNPLUGGED phone-time <20% at weekday 21:00 = 0.148 [90% CI 0.10–0.19], 1-2-1 smoothed 0.135; weekend 22:00 0.22; all-time (incl. plugged) weekday peak 0.130. Biases: app drain (+), extra battery given (−), 2015 phones (+). Earlier: Indirect: Ferreira 2011 (4,035 users, verified): mean SoC 67%, lowest hourly mean 65% at midnight, daily minimum ≈30%. A normal approximation (SD 25 pts) gives ≈4–8% below 20% in the evening; 0.12 kept because p_aware is calibrated against it (2026-11-08: range low widened 0.05→0.04). No hourly SoC histogram exists in open literature; street survey needed. 2026-11-09: low end raised 0.04→0.05: Li et al. 2018 (Sherlock, 51 users) 41% of discharge sessions end <20% and 5% die; Guo et al. 2017 (80k Android, China) charge-start levels roughly uniform and ~1 battery death per user per month — both inconsistent with ≈4%. Value 0.12 kept: only c = p_aware×p_low_peak×p_seek is identified (STATS_TOOLKIT M7).', url: 'https://ubicomp.oulu.fi/files/pervasive11.pdf' },
   p_seek: { group: 'Demand', label: 'Low-battery users with no charger of their own who would rent', value: 0.30, low: 0.15, high: 0.50, unit: 'fraction', conf: 'LOW', source: 'Tang et al. IMWUT 2020 (n=2,032): 92% feel low-battery anxiety, anxiety starts ~20%; 70% use portable chargers only occasionally, 10% frequently', url: 'https://arxiv.org/abs/2004.07662' },
   wtp_mid_hourly:   { group: 'Demand', label: 'Price where half of willing users decline', value: 3.0, low: 2.0, high: 5.0, unit: '$/hr', conf: 'ASSUMPTION',
-                      source: 'No data. Campus test: $30 hold + $2/hr deterred some users (meeting).', ref: '' },
+                      source: 'No direct WTP data. Price response from ChargeSPOT (2026-11-11, own calc from INFORICH decks): Japan Jul-2024 rise ARPR +13% → implied elasticity ≈ −0.8 (−0.3 to −1.0); Taiwan Jun-2025 rise ≈ −0.3 to −0.4; Japan ¥330 minimum caused "users leaving" (Q2-2025 deck p.7) and was cut back to ¥165 in May 2025. Campus test: $30 hold + $2/hr deterred some users (meeting).', ref: '' },
   search_radius_m:  { group: 'Behaviour', label: 'How far a low-battery user will walk to rent', value: 300, low: 150, high: 500, unit: 'm', conf: 'ASSUMPTION', source: 'No data', ref: '' },
   return_radius_m:  { group: 'Behaviour', label: 'How far a renter will walk to return', value: 350, low: 200, high: 600, unit: 'm', conf: 'ASSUMPTION', source: 'No data', ref: '' },
   p_forget: { group: 'Behaviour', label: 'Renters who forget (go past 24 h)', value: 0.04, low: 0.01, high: 0.10, unit: 'fraction', conf: 'LOW', source: 'Indirect: Energy Monster 2020 cost of power banks sold (incl. kept by users) = 3.4% of revenue. Direct non-return rate not disclosed.', url: 'https://www.sec.gov/Archives/edgar/data/1834253/000104746921000594/a2242952zf-1.htm' },
@@ -68,13 +68,18 @@ export const PARAMS = {
                       source: 'No data; typically back the next morning', ref: '' },
   grace_failed_return: { group: 'Behaviour', label: 'Clock paused after a failed return (1 = on)', value: 1, low: 1, high: 1, unit: 'flag', conf: 'FACT',
                       source: 'GAME_PLAN §1.3 grace policy: customer service pauses the clock or adds hours if the user could not find a kiosk. Added 2026-11-10: before this, full stations raised profit (billing ran on, deposits forfeited; Morris run).', ref: 'GAME_PLAN.md' },
+  forfeit_dispute_rate: { group: 'Costs', label: 'Forfeited deposits disputed by the card holder (lost + fee)', value: 0.15, low: 0.05, high: 0.35, unit: 'fraction of forfeits', conf: 'ASSUMPTION',
+                      source: 'No operator figure. Hangzhou consumer council 2022: 34.3% of shared-power-bank users had been billed after returning (P062) — disputes of overdue charges are common. Added 2026-11-11 (Morris: forfeits counted as pure gain).', url: '' },
+  dispute_fee:      { group: 'Costs', label: 'Card dispute (chargeback) fee', value: 15, low: 15, high: 15, unit: '$ / dispute', conf: 'HIGH', source: 'Stripe US pricing: $15 per dispute', url: 'https://stripe.com/pricing' },
+  forfeit_churn_cost: { group: 'Costs', label: 'Lost future margin per forfeiting customer', value: 8, low: 0, high: 25, unit: '$ / forfeit', conf: 'ASSUMPTION',
+                      source: 'No data. Customer billed $30 likely stops renting; ≈4–10 future rentals × ~$1–2 margin. Added 2026-11-11 so longer holds and forgetting no longer raise profit for free.', url: '' },
   p_recover_after_forfeit: { group: 'Behaviour', label: 'Forfeited packs eventually returned', value: 0.4, low: 0.1, high: 0.7, unit: 'fraction', conf: 'ASSUMPTION', source: 'No data', ref: '' },
 
   p_stay:           { group: 'Behaviour', label: 'Renters who stay at the venue and return once charged', value: 0.5, low: 0.25, high: 0.75, unit: 'fraction', conf: 'LOW',
                       source: 'Sets the rental-duration mix. 0.5 gives a 70-min median, between Brick (≈45 min, €1/h like Charj) and ChargeSPOT Japan Jun 2024 (median ≈133 min: 10% <30 min, 26% <1 h, 64% <3 h, 5% ≥24 h) / HK 2024 (30% of users <1 h, 76% <3 h). p_stay 0.3 → 121-min median, $652/wk; 0.7 → 59 min, $336/wk. 2026-11-10: range widened from 0.3–0.7; old target ">60% within 1 h" is a share of users and conflicts with INFORICH\'s own histogram (P059).', url: 'https://www2.jpx.co.jp/disc/93380/140120241113521342.pdf' },
 
   // ── Phone charging physics ──
-  phone_rate_fast: { group: 'Battery', label: 'Phone charge speed below 80%', value: 1.8, low: 1.4, high: 2.1, unit: '%/min', conf: 'MED', source: 'Apple 20 W: 0→50% in ~30 min; Android Authority test, iPhone 15: 50% at 24 min, 75% at 42 min', url: 'https://www.androidauthority.com/best-iphone-15-chargers-3363259/' },
+  phone_rate_fast: { group: 'Battery', label: 'Phone charge speed below 80%', value: 1.5, low: 1.0, high: 1.9, unit: '%/min', conf: 'MED', source: 'Leikeji/36Kr 2025 (verified): iPhone 16 Pro from 20%, 8 power banks with built-in cables, +47–49 pts in 30 min (≈1.6 %/min), avg 15–17 W; a 20 W pack matched a 45 W one. BST-0155 UN38.3 report: max 20 W per cable (iOS 9V/2.22A, Type-C 9V/2.22A or 12V/1.67A). Macworld: 12 W ≈ 10 min slower to 50% than 18 W. Low tail: Hangzhou consumer council 2022 shared packs +19% in 30 min (0.63 %/min). 2026-11-11: was 1.8 (1.4–2.1), based on 20 W wall adapters from 0%.', url: 'https://www.36kr.com/p/3399522465880451' },
   phone_rate_slow: { group: 'Battery', label: 'Phone charge speed above 80%', value: 0.5, low: 0.3, high: 0.7, unit: '%/min', conf: 'LOW', source: 'Apple: fast charge to 80%, then trickle (CC/CV). Exact taper rate not published.', url: 'https://www.apple.com/batteries/why-lithium-ion/' },
   old_phone_share: { group: 'Battery', label: 'Share of phones ≥3 years old', value: 0.40, low: 0.30, high: 0.50, unit: 'fraction', conf: 'MED', source: 'CIRP 2025: 42% of US iPhone buyers retired a phone kept ≥3 years; Assurant 2024: avg trade-in age 3.64 yrs', url: 'https://cirpapple.substack.com/p/new-iphone-buyers-upgrade-from-even' },
   old_phone_speed: { group: 'Battery', label: 'Charge speed factor for older phones', value: 0.8, low: 0.65, high: 0.9, unit: '×', conf: 'LOW', source: 'Apple: iPhone 14 and earlier designed for 80% capacity at 500 cycles; effect on charge speed not measured', url: 'https://support.apple.com/en-us/106348' },
@@ -125,7 +130,13 @@ export const PROFILES = {
 // Share of phones below ~20% by hour (multiplier on p_low_peak; 1.0 = evening peak).
 // Shape informed by Ferreira et al. 2011: SoC lowest around midnight, charging windows 18–20 h and 01–02 h,
 // highest at ~05 h. Exact values are an ASSUMPTION.
-export const LOW_BATTERY_CURVE = [0.75,0.8,0.8,0.7,0.4,0.15,0.08,0.08,0.12,0.18,0.25,0.33,0.4,0.48,0.56,0.64,0.72,0.82,0.92,1.0,1.0,0.95,0.9,0.82];
+// Relative share of phones <20% by local hour, ×p_low_peak (= weekday 21:00 value).
+// 2026-11-11: replaced the hand-drawn curve (old: [0.75,0.8,0.8,0.7,0.4,0.15,0.08,0.08,0.12,0.18,0.25,0.33,0.4,0.48,0.56,0.64,0.72,0.82,0.92,1.0,1.0,0.95,0.9,0.82])
+// with ExtraSensory (UCSD, n=60, 2015–16) share of UNPLUGGED phone-time <20%, equal-user, time-weighted, 1-2-1 smoothed,
+// normalised to weekday 21:00 (= 0.135). Weekend = 50/50 shrink of the weekend curve toward weekday (thin night data, n=13–27 users).
+// Source: research/data/extrasensory_unplugged_low_by_hour.csv (scripts/extrasensory_unplugged_low.py). Local clock hour, applied unchanged to ET/CT.
+export const LOW_BATTERY_CURVE = [0.95, 0.98, 0.93, 0.88, 1.03, 1.04, 0.64, 0.32, 0.28, 0.29, 0.23, 0.16, 0.26, 0.53, 0.75, 0.8, 0.69, 0.59, 0.63, 0.72, 0.84, 1.0, 0.99, 0.92];
+export const LOW_BATTERY_CURVE_WEEKEND = [1.23, 1.38, 1.54, 1.6, 1.66, 1.55, 1.05, 0.59, 0.46, 0.38, 0.25, 0.21, 0.33, 0.61, 0.87, 0.91, 0.84, 0.79, 0.71, 0.72, 0.95, 1.19, 1.23, 1.18];
 
 export function paramValues(overrides = {}) {
   const v = {};
@@ -153,11 +164,14 @@ export const BENCHMARKS = [
     points: [
       { name: 'Brick (EU, 2025)', value: '0.5–3', conf: 'HIGH', url: 'https://articles.brick.tech/the-10-most-frequently-asked/' },
       { name: 'ChargeSPOT Japan (Dec 2024)', value: '≈1.3', conf: 'HIGH', url: 'https://edinetdb.jp/company/E38192/text?fy=2024' },
+      { name: 'ChargeSPOT Japan (2025: 24.76M rentals / ≈53k avg stations)', value: '≈1.27', conf: 'HIGH', url: 'https://inforich.net/eir-parts/doc/9338/tdnet/2763465/00.pdf' },
+      { name: 'ChargeSPOT Australia (Q1→Q4 2025, ≈US$7–8/rental)', value: '0.48–0.84', conf: 'HIGH', url: 'https://inforich.net/eir-parts/doc/9338/tdnet/2763465/00.pdf' },
+      { name: 'ChargeSPOT Taiwan (Q1 2025)', value: '≈1.4', conf: 'HIGH', url: 'https://www2.jpx.co.jp/disc/93380/140120250514550196.pdf' },
       { name: 'Recharge.city NYC (2023)', value: '≈2', conf: 'LOW', url: 'https://www.digitaljournal.com/pr/news/accesswire/recharge-city-takes-over-new-york' },
     ] },
   { metric: 'medianRentalMin', label: 'Median rental duration (min)', low: 30, high: 90,
     points: [
       { name: 'Brick median (2025)', value: '≈45 min', conf: 'HIGH', url: 'https://articles.brick.tech/the-10-most-frequently-asked/' },
-      { name: 'ChargeSPOT Japan', value: '>60% within 1 h', conf: 'HIGH', url: 'https://inforich.net/en/6617/chargespot-to-revise-minimum-rental-fee-from-may-1-2025/' },
+      { name: 'ChargeSPOT Japan (Jun 2024 histogram; median ≈2 h, 26% <1 h)', value: '≈120 min', conf: 'MED', url: 'https://www2.jpx.co.jp/disc/93380/140120241113521342.pdf' },
     ] },
 ];

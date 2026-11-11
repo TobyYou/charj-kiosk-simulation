@@ -6,7 +6,7 @@
 // Factors: every PARAMS entry with low < high and conf != 'FACT', except p_low_peak and p_seek,
 // with the funnel product c = p_aware × p_low_peak × p_seek as ONE factor (varied via p_aware,
 // STATS_TOOLKIT M7), range c ∈ [5.9e-5, 3.9e-4].
-// Usage: node research/scripts/morris_screening.mjs [r=20] [reps=10] [seed=20261110]
+// Usage: node research/scripts/morris_screening.mjs [r=20] [reps=10] [seed=20261110] [date=today]
 import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
@@ -19,7 +19,7 @@ const reps = +(process.argv[3] || 10);
 const seed = +(process.argv[4] || 20261110);
 const P_LEVELS = 4;
 const DELTA = P_LEVELS / (2 * (P_LEVELS - 1)); // 2/3
-const DATE = '2026-11-10';
+const DATE = process.argv[5] || new Date().toISOString().slice(0, 10);
 const here = dirname(fileURLToPath(import.meta.url));
 const dataDir = join(here, '..', 'data');
 

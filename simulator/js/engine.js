@@ -8,7 +8,7 @@
 
 import { RNG } from './rng.js';
 import { ZONES, SITES, PERSONA_MIX, DWELL, walkDist } from './geo.js';
-import { PROFILES, LOW_BATTERY_CURVE, SCENARIOS, paramValues } from './params.js';
+import { PROFILES, LOW_BATTERY_CURVE, LOW_BATTERY_CURVE_WEEKEND, SCENARIOS, paramValues } from './params.js';
 
 const WALK_M_PER_MIN = 75;   // ≈1.25 m/s
 const DAY = 1440;
@@ -73,7 +73,7 @@ export class Simulation {
       candidates: 0, rentals: 0, unmetNoKiosk: 0, unmetEmpty: 0, declinedPrice: 0,
       returns: 0, failedReturnAttempts: 0, csTickets: 0, forfeits: 0, lost: 0,
       rentalRevenue: 0, forfeitRevenue: 0, cardFees: 0, hostShare: 0, csCost: 0,
-      rebalanceCost: 0, lossCost: 0, rebalanceStops: 0,
+      rebalanceCost: 0, lossCost: 0, rebalanceStops: 0, disputeCost: 0, disputes: 0, churnCost: 0,
       packMinutesOut: 0, packMinutesTotal: 0,
       durations: [],
       hourly: Array.from({ length: H }, () => ({ rentals: 0, unmet: 0, failed: 0, out: 0, avail: 0 })),
@@ -110,7 +110,7 @@ export class Simulation {
     } else if (sc.otherMult) foot *= sc.otherMult;
     if (wk === 'weekend' && z.weekendFactor) foot *= z.weekendFactor;
 
-    let pLow = this.P.p_low_peak * LOW_BATTERY_CURVE[h] * (sc.lowMult || 1);
+    let pLow = this.P.p_low_peak * (wk === 'weekend' ? LOW_BATTERY_CURVE_WEEKEND : LOW_BATTERY_CURVE)[h] * (sc.lowMult || 1);
     let pSeek = this.P.p_seek;
     if (this.outageActive(t)) { pLow *= sc.outage.lowMult; pSeek = Math.min(1, pSeek * sc.outage.seekMult); }
     pLow = Math.min(0.9, pLow);
@@ -375,6 +375,14 @@ export class Simulation {
         this.m.forfeits++;
         this.m.forfeitRevenue += this.P.deposit;
         this.m.cardFees += this.P.deposit * this.P.stripe_pct + this.P.stripe_fixed;
+        // 2026-11-11: forfeits are not free money. Some are disputed (deposit reversed + card
+        // dispute fee) and every forfeit costs a customer's future rentals (churn).
+        if (this.rng.bernoulli(this.P.forfeit_dispute_rate)) {
+          this.m.forfeitRevenue -= this.P.deposit;
+          this.m.disputeCost += this.P.dispute_fee;
+          this.m.disputes++;
+        }
+        this.m.churnCost += this.P.forfeit_churn_cost;
         this.emit('forfeit', { kiosk: r.from.id });
         // Some packs come back later; the rest are lost and replaced.
         if (!this.rng.bernoulli(this.P.p_recover_after_forfeit)) {
@@ -394,17 +402,21 @@ export class Simulation {
 
   doRebalance() {
     const target = this.P.packs_per_kiosk;
+    // Policy (2026-11-11): a rebalanced station is never left full, because a full station blocks
+    // returns. Fill level = min(target, slots − 1). Before this fix the surplus test (packs > target+1)
+    // could never fire at target 7–8 on 8 slots, so those targets skipped rebalancing (and its cost)
+    // entirely and looked ~$130/wk better in the Morris run (P068).
+    const fill = k => Math.min(target, k.slots - 1);
     const surplus = [], deficit = [];
     for (const k of this.kiosks) {
-      const desired = Math.min(k.slots, target);
-      if (k.packs.length > desired + 1) surplus.push(k);
-      else if (k.packs.length < desired - 1) deficit.push(k);
+      if (k.packs.length > Math.min(target + 1, k.slots - 1)) surplus.push(k);
+      else if (k.packs.length < fill(k) - 1) deficit.push(k);
     }
     if (!surplus.length || !deficit.length) return;
     const touched = new Set();
     for (const d of deficit) {
       for (const s of surplus) {
-        while (d.packs.length < Math.min(d.slots, target) && s.packs.length > Math.min(s.slots, target)) {
+        while (d.packs.length < fill(d) && s.packs.length > fill(s)) {
           s.packs.sort((a, b) => b.soc - a.soc);
           d.packs.push(s.packs.shift());
           touched.add(s); touched.add(d);
@@ -456,7 +468,7 @@ export class Simulation {
     const placementWeekly = nK * this.P.placement_fee / 52;
     const revenue = m.rentalRevenue + m.forfeitRevenue;
     const overhead = (placementWeekly + this.P.software_weekly) * weeks;
-    const costs = m.cardFees + m.hostShare + m.csCost + m.rebalanceCost + m.lossCost + hardwareWeekly * weeks + overhead;
+    const costs = m.cardFees + m.hostShare + m.csCost + m.rebalanceCost + m.lossCost + m.disputeCost + m.churnCost + hardwareWeekly * weeks + overhead;
     const profit = revenue - costs;
     const durs = [...m.durations].sort((a, b) => a - b);
     const med = durs.length ? durs[Math.floor(durs.length / 2)] : 0;
@@ -482,7 +494,7 @@ export class Simulation {
       utilization: m.packMinutesTotal ? m.packMinutesOut / m.packMinutesTotal : 0,
       revenue, rentalRevenue: m.rentalRevenue, forfeitRevenue: m.forfeitRevenue,
       cardFees: m.cardFees, hostShare: m.hostShare, csCost: m.csCost,
-      rebalanceCost: m.rebalanceCost, lossCost: m.lossCost, hardware: hardwareWeekly * weeks, overhead,
+      rebalanceCost: m.rebalanceCost, lossCost: m.lossCost, disputeCost: m.disputeCost, disputes: m.disputes, churnCost: m.churnCost, hardware: hardwareWeekly * weeks, overhead,
       costs, profit,
       profitPerWeek: profit / weeks,
       revenuePerWeek: revenue / weeks,
