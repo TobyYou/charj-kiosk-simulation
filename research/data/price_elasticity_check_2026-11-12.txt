@@ -1,0 +1,13 @@
+wtp_mid_hourly m=3, slope s=2; reps=30, seed=20261112 (CRN across prices)
+price  rentals/stn/day  revenue/wk  profit/wk  declined/wk  p_accept  eps_point  eps_arc(vs prev)
+ 1.00            2.849        1181        477          5.6     0.982     -0.036          
+ 1.50            2.810        1629        811         13.2     0.953     -0.142    -0.035
+ 2.00            2.620        1969       1095         32.5     0.881     -0.477    -0.245
+ 2.50            2.190        2021       1192         75.7     0.731     -1.345    -0.805
+ 3.00            1.550        1719       1047        141.0     0.500     -3.000    -1.882
+P=$1/hr: ε=-0.3 needs wtp_mid = 1.87
+P=$1/hr: ε=-0.8 needs wtp_mid = 1.20
+P=$1/hr: ε=-1 needs wtp_mid = 1.00
+P=$2/hr: ε=-0.3 needs wtp_mid = 3.26
+P=$2/hr: ε=-0.8 needs wtp_mid = 2.69
+P=$2/hr: ε=-1 needs wtp_mid = 2.55
