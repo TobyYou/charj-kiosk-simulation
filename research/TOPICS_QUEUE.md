@@ -3,25 +3,32 @@
 Yardstick: how much resolving the unknown would move profit/week or kiosk placement (see the sensitivity tab and STATS_TOOLKIT M4).
 
 ## Open
-1. [ ] **Decide where to centre c, together with wtp_mid** (P055, P088). 2026-11-12: no audited US/EU benchmark exists (P089), so ChargeSPOT Australia (0.48–0.84/day) remains the best price-matched point. Refreshed sweep: Australia-level 0.62/day → $47/wk, Japan-level 1.25 → $182/wk, default 2.93 → $508/wk. New: the WTP logistic is nearly inelastic at $1/hr (ε −0.04 vs comparables −0.3 to −1.9), so c and wtp_mid must be re-calibrated *jointly* (two targets: rentals band + elasticity ≈ −0.3 to −0.8 at ~$2.5/rental). Present the profit curve over (c, wtp_mid) rather than a point.
-2. [ ] **Sobol on uncertain inputs only** (M4 update): fix decisions (packs_per_kiosk, host_share, price) at candidate values, decompose c, rebalance_cost (new 4–15), forfeit_churn_cost, p_stay, away_return_median_h, forfeit_dispute_rate, wtp_mid, p_forget. Also optimise packs_per_kiosk per c draw (stocking × demand interaction drives ≈25% of variance).
-3. [ ] **Nashville footfall model** (P077, P078, P083, P085): build zones from campus population × Melbourne campus-edge hourly shape × term/break ratio ≈2.5×, with the VU 2026–27 calendar; FirstBank Stadium 35,000 game-day scenario.
-4. [ ] **Rental-duration calibration** (P059, P076, M8): calibrate stay share + stay median from operator bins.
-5. [ ] **Term/break calendar scenario** for NYC and Nashville (P085 dates, P083 ratio) — a "break week" scenario in params SCENARIOS.
-6. [ ] **forfeit_churn_cost: residual LTV** — power-bank or micromobility repeat-rental rates (rentals per user per month, 30/90-day return) still NOT FOUND; try ChargeSPOT member counts vs rentals in TDnet decks, Citi Bike casual→member conversion.
-7. [ ] **Event egress sub-hourly** (P040, P086): digitise MARTA paper Fig. 13–14 (5-min bins) and implement event egress in the engine.
-8. [ ] Cross-check 125 St footfall zone against NYC DOT W 125 St counts (P084).
-9. [ ] Confirm BST-0155 real output (P072) — needs Toby / bench test.
-10. [ ] Daily-cap scenario ($5–8/day; P049, P061, P089 EU caps €6–10). Adoption effect still NOT FOUND.
-11. [ ] GreenHub replication of the low-battery curve (needs pyarrow — Toby).
-12. [ ] Citi Bike gravity-model β for return location.
-13. [ ] Day-level random effect in the engine (P035, CV 0.08; Melbourne campus sensors CV 0.26–0.29 weekdays, P083).
-14. [ ] Measured drain underground on a modern 5G phone (P013 LOW).
-15. [ ] Per-rental non-return rate (no operator figure).
-16. [ ] Miami: term-time Metrorail reports once posted.
+1. [ ] **Decide where to centre c** (P055, P091). wtp_mid is now calibrated (2.25), so c is the only big lever. The wide 0.5–3 band can't pin it; the price-matched Australia band (0.48–0.84/day) puts c at 6e-5–1e-4 (≈$30–90/wk at $1/hr; $45–220/wk at $2/hr). Present the profit curve over c at $1, $1.5 and $2/hr. This needs Toby's decision or pilot data.
+2. [ ] **EVPPI ranking of uncertain inputs** (STATS_TOOLKIT M11). Decisions are price {1, 1.5, 2} × host_share. Uncertain inputs are c, rebalance_cost, forfeit_churn_cost, p_stay, away_return_median_h, wtp_mid. The regression or binning estimator replaces Sobol as the research-priority yardstick.
+3. [ ] **Nashville footfall model in the engine** (P077, P078, P083, P092, P096). Inputs:
+   - Campus zones: about 5,500 on-campus UG, 13.6k students and VU+VUMC staff, with the Melbourne/Chicago CT shape. The term/break ratio is 2.0 (1.45–2.6).
+   - A Broadway night zone with the MNPD shape (P092). Its level comes from P078.
+   - The stadium scenario.
+   This needs a Nashville SITES set in geo.js.
+4. [ ] **Student price segment.** INFORICH's youth churn and its U22 discount (P091) suggest steeper price response for students. Look for student-specific elasticities, e.g. campus transit or laundry, or the U22 uptake numbers in INFORICH decks.
+5. [ ] **Rental-duration calibration** (P059, P076, M8 note): calibrate the stay share and stay median. State an effective N, and get df ≥ 1 by fixing the away tail.
+6. [ ] **Term/break calendar scenario** for NYC and Nashville (P085, with ratio 2.0 from P096). Add a "break week" to SCENARIOS.
+7. [ ] **forfeit_churn_cost from residual LTV.** P094 gives ≈4.4 rentals per yearly active user. Multiply by margin per rental, and assume the share of churners lost. The 30/90-day repeat share is still NOT FOUND.
+8. [ ] **Habit dynamics:** a free-first-ride promo has lasting effects (Weschke 2024: +20% three months after). Consider a launch-promo scenario with a decaying uplift.
+9. [ ] **Event egress sub-hourly** (P040, P086): digitise MARTA Fig. 13–14 and implement it in the engine.
+10. [ ] Cross-check the 125 St footfall zone against NYC DOT W 125 St counts (P084).
+11. [ ] Confirm BST-0155 real output (P072). Needs Toby or a bench test.
+12. [ ] Daily-cap scenario ($5–8/day; P049, P089). The adoption effect is still NOT FOUND. Deposit-free uplift is ≈30% (P095, LOW).
+13. [ ] GreenHub replication of the low-battery curve (needs pyarrow, Toby).
+14. [ ] Citi Bike gravity-model β for return location.
+15. [ ] Day-level random effect in the engine (P035, P083).
+16. [ ] Measured drain underground on a modern 5G phone (P013 LOW).
+17. [ ] Per-rental non-return rate (no operator figure yet).
+18. [ ] Miami: term-time Metrorail reports once posted.
 
 ## Needs Toby (fieldwork, accounts, or decisions)
-- [ ] Decide the calibration centre for c (queue #2): top-of-band 3.6e-4 vs prior-centre 2.0e-4.
+- [ ] Decide the calibration centre for c (queue #1): top-of-band 3.6e-4 vs prior-centre 2.0e-4 vs Australia-matched 6e-5–1e-4 (P091).
+- [ ] Price decision: the calibrated model now says $2/hr beats $1/hr at every plausible c (P091), but the youth-churn evidence argues for a student discount. Decide whether to test $1.50–2.
 - [x] ~~Library access to Hosio CHI 2016~~ — open author copy found 2026-11-10 (P067).
 - [ ] Phone-charge street survey at candidate sites (GAME_PLAN §5) — now the single highest-value data item (queue #1).
 - [ ] Bench test: pack recharge time vs. fill level; real output W — and whether the iOS cable delivers 9 V PD (P072: report says 20 W max, GAME_PLAN says 22.5 W).
@@ -32,6 +39,10 @@ Yardstick: how much resolving the unknown would move profit/week or kiosk placem
 - [ ] WeGo ridership data request (form at wegotransit.com) for Nashville.
 
 ## Done
+- [x] 2026-11-13: Joint c + wtp_mid history match (M10, P091): wtp_mid 3.0 → 2.25. Former item 1 (c centre still open → item 1).
+- [x] 2026-11-13: Sobol on uncertain inputs only, plus stocking optimised per c (P093, P097). Former item 2. Stocking is solved at 5–6 packs.
+- [x] 2026-11-13: Nashville footfall inputs (P092 Broadway shape, P096 populations and the CT term ratio). Former item 3 (engine build still open → item 3).
+- [x] 2026-11-13: Repeat use (P094) and deposit effect (P095). Former item 6 (partial).
 - [x] 2026-11-12: Sobol indices on top-8 Morris factors (P090, M4 update). Former item 3.
 - [x] 2026-11-12: Rebalancing cost grounded in wages (P082: 12 → 7, range 4–15); forfeit churn evidence (P087, value kept). Former item 2.
 - [x] 2026-11-12: Simulator price elasticity vs comparables (P088) — flagged, folded into item 1. Former item 5.

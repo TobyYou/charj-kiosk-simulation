@@ -93,3 +93,69 @@ Each entry should cover:
 - **Result (profit):** ST packs_per_kiosk 0.32 [0.26, 0.38], rebalance_cost 0.23 (old 6–25 range), c 0.22 [0.19, 0.26] with S1 only 0.10, host_share 0.19, forfeit_churn_cost 0.06, p_stay 0.06, away_return_median_h 0.05, forfeit_dispute_rate 0.03. ΣS1 = 0.75 → ≈25% of variance is interactions (mostly c × stocking). For rentals/station/day, c alone explains S1 0.89 / ST 0.995.
 - **Lesson:** separate *decision variables* (packs_per_kiosk, host_share, price) from *uncertain inputs* before reading a variance decomposition. Next run: fix decisions at their candidate values (or optimise them per c draw) and decompose only the unknowns; the investor message is then "profit uncertainty is X% c, Y% costs".
 - **Validation:** ΣS1 ≤ 1 and ST ≥ S1 within CI for all factors (p_stay S1 slightly negative = noise); rentals ST_c ≈ 1 matches the M7 identifiability result that rentals depend only on c.
+
+- **M8 note 2026-11-13 (methods agent; S130):** with counts unknown, CIs from binned shares are arbitrary — state an assumed effective N, then use profile likelihood (2[ℓ̂ − ℓ_p] ≤ 3.84) or parametric bootstrap (Multinomial(N, p̂), B = 1,000 refits). G-test: G = 2 Σ n_j ln(n_j / N p̂_j), df = K − 1 − q; merge bins with expected count < 5. Compare simulated bins at the *data's* N, not the simulator's huge N (which rejects any model). Fix σ_stay or the away component to get df ≥ 1.
+
+## M10. History matching for jointly calibrated parameters (added 2026-11-13, run)
+- **Serves:** demand funnel c and price acceptance wtp_mid (P055, P091); any later pair calibrated against several benchmark targets.
+- **Equation (Vernon, Goldstein & Bower 2010; Andrianakis et al. 2015, S126–S127):** for each target k, I_k(x) = |z_k − Ê[f_k(x)]| / sqrt(V_obs,k + V_disc,k + V_MC,k(x)), with V_MC = s²/R from R replicate runs. Non-implausible region: max_k I_k(x) ≤ 3 (Pukelsheim 3σ rule: any unimodal density has P(|X−μ| ≥ 3σ) ≤ 4/81 ≈ 0.05). Later waves may add a joint test: the quadratic form compared with χ²₂ at 95% (5.99).
+- **Our setting (`scripts/joint_calibration_c_wtp.mjs`):**
+  - Rentals/station/day on the log scale: z = ln √(0.5·3), and the band edges are ±2σ_obs.
+  - Elasticity: z = −0.6, σ_obs = 0.2.
+  - Discrepancy SDs: 0.2 (log rentals) and 0.1 (elasticity).
+  - The elasticity is a *paired* arc difference across $1 and $2/hr on the same seeds (CRN), so V_MC is tiny.
+  - Note: Andrianakis instead use 10% of the output variance for V_disc. The agent's alternative of σ_obs = half-width/3 puts I = 3 exactly at the band edges and is looser.
+- **Assumptions:**
+  - The targets are transferred from other markets (P074, P075, P088).
+  - Discrepancy variances are judgement calls. State them, and show what doubling them does.
+- **Fit:**
+  - Wave 1 is a 7×7 grid × 3 prices × 20 reps (≈3k runs, 70 s). No emulator is needed at this cost.
+  - Wave 2 (if needed) re-samples ≈200 non-implausible points at R = 30.
+- **Result 2026-11-13:**
+  - Elasticity pins wtp_mid at about 1.9–2.6, independent of c.
+  - The wide band does not pin c.
+  - The price-matched Australia band would pin c at about 6e-5–1e-4.
+- **Validation:**
+  - Re-run held-out non-implausible points with fresh seeds and check I ≤ 3.
+  - Check that parameter-free outputs (median rental minutes, P059 band 30–90/120) still sit in their bands.
+- **Alternative: ABC rejection** (Beaumont, Zhang & Balding 2002).
+  - Draw from uniform priors and accept if ‖(s − z)/σ‖ ≤ τ, with τ set so 1–5% of draws are accepted.
+  - The accepted draws give a predictive profit distribution.
+- **Presentation:**
+  - Draw a heatmap of I_max with the I = 3 contour and overlay profit contours.
+  - Report the min, median and max of profit over the non-implausible set.
+
+## M11. Value of information (EVPI / EVPPI) to rank research when some inputs are decisions (added 2026-11-13, not yet run)
+- **Serves:**
+  - The research queue ranking ("which unknown, if resolved, would change the decision or profit most").
+  - Separating decisions (packs, host share, price, layout) from uncertainties (c, rebalance_cost, churn, …).
+- **Equations** (Heath et al. 2017; Strong, Oakley & Brennan 2014; S128–S129):
+  - EVPI = E_θ[max_d U(d,θ)] − max_d E_θ[U(d,θ)].
+  - EVPPI(φ) = E_φ[max_d E_{ψ|φ} U(d,θ)] − max_d E_θ U(d,θ).
+- **Regression estimator** (Strong et al. 2014):
+  - Fit U(d,θ_s) = g_d(φ_s) + ε. Use a spline, LOESS or binning for 1-D φ, and a GAM/GP for 2–5 inputs.
+  - Then EVPPI ≈ mean_s max_d ĝ_d(φ_s) − max_d mean_s ĝ_d(φ_s).
+  - Simulation noise does not bias this upward, because regression comes before the max. Nested Monte Carlo is upward-biased for small inner loops.
+- **Binning shortcut** (Strong & Oakley 2013): sort the draws by φ, split them into M bins, average U per decision within each bin, take the max, and average over bins.
+  - Too many bins pushes the estimate toward EVPI.
+  - Too few bins pushes it toward 0.
+- **Plan:**
+  1. Discretise D. For example, price {1, 1.5, 2} × host_share {low, mid, high} × layout variants; packs is now fixed at 5–6 (P093).
+  2. Draw S = 2,000–5,000 θ over the uncertain inputs and run every d on the same seeds.
+  3. Fit ĝ_d per φ.
+  4. Bootstrap the SE.
+- **Pitfalls:**
+  - EVPPI is not additive.
+  - EVPPI(group) ≥ max of the single-input values.
+  - Scale by network × horizon (weeks) to express it in dollars.
+  - Felli & Hazen (1998): variance-based indices overstate decision relevance, so use EVPPI rather than Sobol ST for research priority.
+
+### M4 update (2026-11-13): Sobol indices on uncertain inputs only
+- **Setup:**
+  - Decisions were fixed at packs 6, $1/hr and the default host share.
+  - k = 8 uncertain inputs, N = 512 (`SOBOL_FACTORS=c,rebalance_cost,forfeit_churn_cost,p_stay,away_return_median_h,forfeit_dispute_rate,wtp_mid_hourly,p_forget`).
+- **Result:**
+  - ST: c 0.64, forfeit_churn_cost 0.16, p_stay 0.11, away_return_median_h 0.085, rebalance_cost 0.065. Everything else is under 0.05.
+  - Interactions are now small (ΣS1 ≈ 1).
+  - What looked like stocking × demand interaction on 11-12 was the 7–8-pack return-blocking cliff (P093).
+- **Caveat:** the S1 estimator was unstable (S1_c > ST_c within CI). If S1 is needed, switch to the Jansen S1 form or raise N.
