@@ -1,0 +1,22 @@
+// Re-run the figures quoted in the white paper demo script (about 1 minute): node showcase/demo_numbers.mjs
+import { replicate, compare, stats } from '../simulator/js/montecarlo.js';
+const base = { scenario: 'normal', days: 7, rebalance: true };
+const LIVE = ['hunan', 'lerner'], CORE = ['hunan','lerner','butler','bwy112','bwy116','ams111'];
+const ALL = ['hunan','lerner','butler','bwy112','bwy116','barnard','ams111','tc120','bwy104','bwy97','bwy125','mville','sinai'];
+const R = 120;
+const s = (name, cfg) => { const r = replicate({ ...base, ...cfg }, R); const p = stats(r.map(x => x.profitPerWeek)), rv = stats(r.map(x => x.revenuePerWeek)), rs = stats(r.map(x => x.rentalsPerStationDay)), sl = stats(r.map(x=>x.serviceLevel));
+  console.log(name.padEnd(34), 'profit/wk', p.mean.toFixed(0).padStart(5), '±', p.ci95.toFixed(0).padStart(3), ' P10-P90', p.p10.toFixed(0), '-', p.p90.toFixed(0), ' P(>0)', p.pPositive.toFixed(2), ' rev', rv.mean.toFixed(0), ' r/st/d', rs.mean.toFixed(2), ' svc', sl.mean.toFixed(2)); return p.mean; };
+const c = (name, a, b) => { const r = compare({ ...base, ...a }, { ...base, ...b }, R); const d = stats(r.diffs); console.log(name.padEnd(34), 'diff/wk', d.mean.toFixed(0).padStart(5), '±', d.ci95.toFixed(0), ' B wins', (r.diffs.filter(x => x > 0).length / R).toFixed(2)); };
+s('Live 2', { siteIds: LIVE });
+s('Core 6', { siteIds: CORE });
+s('All 13', { siteIds: ALL });
+s('Core6 swap lerner->mville', { siteIds: CORE.map(x => x === 'lerner' ? 'mville' : x) });
+s('Core6 swap lerner->bwy125', { siteIds: CORE.map(x => x === 'lerner' ? 'bwy125' : x) });
+s('Live2 swap lerner->mville', { siteIds: ['hunan','mville'] });
+c('Core6 + bwy97', { siteIds: CORE }, { siteIds: [...CORE, 'bwy97'] });
+c('Core6 + barnard', { siteIds: CORE }, { siteIds: [...CORE, 'barnard'] });
+c('Core6 + sinai', { siteIds: CORE }, { siteIds: [...CORE, 'sinai'] });
+s('Core6 double awareness', { siteIds: CORE, params: { p_aware: 0.02 } });
+s('Core6 16 slots 12 packs', { siteIds: CORE, params: { slots_per_kiosk: 16, packs_per_kiosk: 12 } });
+s('Core6 price $2', { siteIds: CORE, params: { price_per_hour: 2 } });
+for (const sc of ['finals','event','outage','cold','summer']) s('Core6 ' + sc, { siteIds: CORE, scenario: sc });
