@@ -21,3 +21,7 @@ research/data/raw/
 
 # Local Claude settings
 .claude/settings.local.json
+
+# Raw street-survey responses stay local (repo is public); commit only aggregated results
+research/survey/*.csv
+research/survey/raw/
